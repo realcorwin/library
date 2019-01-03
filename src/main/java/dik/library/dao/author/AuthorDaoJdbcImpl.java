@@ -12,15 +12,18 @@ import java.util.Map;
 @Repository
 public class AuthorDaoJdbcImpl implements AuthorDao {
 
-    private final NamedParameterJdbcTemplate namedJdbcTemplate;
+    @Autowired
+    private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-    private final AuthorRowMapper authorRowMapper;
-
+    @Autowired
+    private AuthorRowMapper authorRowMapper;
+/*
     @Autowired
     public AuthorDaoJdbcImpl(NamedParameterJdbcTemplate namedJdbcTemplate, AuthorRowMapper authorRowMapper) {
         this.namedJdbcTemplate = namedJdbcTemplate;
         this.authorRowMapper = authorRowMapper;
     }
+*/
 
     @Override
     public int count() {
