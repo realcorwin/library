@@ -2,17 +2,17 @@ package dik.library.model;
 
 public class Book {
 
-    private int id;
+    private long id;
     private String name;
     private String description;
 
-    private int id_author;
+    private long id_author;
     private Author author;
 
-    private int id_genre;
+    private long id_genre;
     private Genre genre;
 
-    public Book(int id, String name, String description, Author author, Genre genre) {
+    public Book(long id, String name, String description, Author author, Genre genre) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,11 +31,11 @@ public class Book {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -55,11 +55,11 @@ public class Book {
         this.description = description;
     }
 
-    public int getId_author() {
+    public long getId_author() {
         return id_author;
     }
 
-    public void setId_author(int id_author) {
+    public void setId_author(long id_author) {
         this.id_author = id_author;
     }
 
@@ -71,11 +71,11 @@ public class Book {
         this.author = author;
     }
 
-    public int getId_genre() {
+    public long getId_genre() {
         return id_genre;
     }
 
-    public void setId_genre(int id_genre) {
+    public void setId_genre(long id_genre) {
         this.id_genre = id_genre;
     }
 

@@ -23,7 +23,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Genre getById(int id) {
+    public Genre getById(long id) {
         return genreDaoJdbc.getById(id);
     }
 
@@ -33,12 +33,12 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void insert(int id, String genreName) {
+    public void insert(long id, String genreName) {
         genreDaoJdbc.insert(new Genre(id, genreName));
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         genreDaoJdbc.deleteById(id);
     }
 }

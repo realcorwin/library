@@ -23,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author getById(int id) {
+    public Author getById(long id) {
         return authorDaoJdbc.getById(id);
     }
 
@@ -33,12 +33,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void insert(int id, String firstName, String secondName) {
+    public void insert(long id, String firstName, String secondName) {
         authorDaoJdbc.insert(new Author(id, firstName, secondName));
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         authorDaoJdbc.getById(id);
     }
 }

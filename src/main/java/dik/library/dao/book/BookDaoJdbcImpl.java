@@ -40,8 +40,8 @@ public class BookDaoJdbcImpl implements BookDao {
     }
 
     @Override
-    public Book getById(int id) {
-        String query = "select * from book where id = :id";
+    public Book getById(long id) {
+        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre where id = :id";
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);
         return namedJdbcTemplate.queryForObject(query, params, bookRowMapper);
@@ -49,12 +49,13 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public List<Book> getAllBook() {
-        String query = "select * from book";
+        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre";
+                //"select * from book";
         return namedJdbcTemplate.query(query, bookRowMapper);
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         String query = "delete from book where id = :id";
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);

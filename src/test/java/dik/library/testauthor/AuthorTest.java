@@ -6,14 +6,14 @@ import dik.library.model.Author;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.shell.jline.InteractiveShellApplicationRunner;
-import org.springframework.shell.jline.ScriptShellApplicationRunner;
 import org.springframework.test.context.junit4.SpringRunner;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,13 +22,11 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AuthorTestConfig.class,properties={
-        InteractiveShellApplicationRunner.SPRING_SHELL_INTERACTIVE_ENABLED + "=false",
-        ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED + "=false"
-})
+@JdbcTest
+@Import(AuthorDaoJdbcImpl.class)
 public class AuthorTest {
 
-    @Autowired
+    @MockBean
     AuthorRowMapper authorRowMapper;
 
     @MockBean
@@ -48,7 +46,7 @@ public class AuthorTest {
     @Test
     public void testGetById(){
         final Map<String, Object> params = new HashMap<>(1);
-        params.put("id", 1);
+        params.put("id", 1L);
         String query = "select * from author where id = :id";
         when(namedJdbcTemplate.queryForObject(query, params, authorRowMapper))
                 .thenReturn(new Author(1, "name1", "name2"));

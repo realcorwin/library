@@ -2,11 +2,11 @@ package dik.library.model;
 
 public class Author {
 
-    private int id;
+    private long id;
     private String firstName;
     private String secondName;
 
-    public Author(int id, String firstName, String secondName) {
+    public Author(long id, String firstName, String secondName) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;
@@ -21,11 +21,11 @@ public class Author {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
