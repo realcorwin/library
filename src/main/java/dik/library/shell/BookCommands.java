@@ -32,12 +32,6 @@ public class BookCommands {
     public void bookDeleteById(@ShellOption long id){
         bookService.deleteById(id);
     }
-    @ShellMethod("Book full insert")
-    public void bookFullInsert(@ShellOption long id, @ShellOption String name, @ShellOption String description,
-                               @ShellOption long authorId, @ShellOption String firstName, @ShellOption String secondName,
-                               @ShellOption long genreId, @ShellOption String genreName){
-        bookService.insert(id, name, description, authorId, firstName, secondName, genreId, genreName);
-    }
     @ShellMethod("Book insert")
     public void bookInsert(@ShellOption long id, @ShellOption String name, @ShellOption String description,
                            @ShellOption long authorId,

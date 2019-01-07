@@ -23,7 +23,7 @@ public class GenreSmartTest {
 
     @Test
     public void count() {
-        Assert.assertEquals(1, genreDaoJdbc.count());
+        Assert.assertEquals(2, genreDaoJdbc.count());
     }
 
     @Test
@@ -35,5 +35,25 @@ public class GenreSmartTest {
     public void getAll() {
         List<Genre> genres = genreDaoJdbc.getAllGenre();
         Assert.assertEquals("genrename22", genres.get(0).getGenreName());
+    }
+
+    @Test
+    public void insert() {
+        Genre genre = new Genre(24, "genrename24");
+        genreDaoJdbc.insert(genre);
+        Assert.assertEquals(3, genreDaoJdbc.count());
+        Assert.assertEquals(24, genre.getId());
+    }
+
+    @Test(expected = Exception.class)
+    public void deleteByIdWithException() {
+        genreDaoJdbc.deleteById(22);
+
+    }
+
+    @Test
+    public void deleteById() {
+        genreDaoJdbc.deleteById(23);
+        Assert.assertEquals(1, genreDaoJdbc.count());
     }
 }

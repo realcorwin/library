@@ -72,8 +72,8 @@ public class BookDaoJdbcImpl implements BookDao {
         params.put("id", book.getId());
         params.put("name", book.getName());
         params.put("description", book.getDescription());
+        params.put("id_author", book.getAuthor().getId());
+        params.put("id_genre", book.getGenre().getId());
         namedJdbcTemplate.update(query, params);
-        authorDaoJdbc.insert(author);
-        genreDaoJdbc.insert(genre);
     }
 }

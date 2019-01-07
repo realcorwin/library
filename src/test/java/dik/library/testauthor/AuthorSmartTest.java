@@ -26,7 +26,7 @@ public class AuthorSmartTest {
 
     @Test
     public void count() {
-        Assert.assertEquals(1, authorDaoJdbc.count());
+        Assert.assertEquals(2, authorDaoJdbc.count());
     }
 
     @Test
@@ -37,6 +37,26 @@ public class AuthorSmartTest {
     @Test
     public void getAll() {
         List<Author> authors = authorDaoJdbc.getAllAuthor();
-        Assert.assertEquals("firstname101", authors.get(0).getFirstName());
+        Assert.assertEquals("firstname99", authors.get(0).getFirstName());
+    }
+
+    @Test
+    public void insert() {
+        Author author = new Author(102, "firstname102", "secondname102");
+        authorDaoJdbc.insert(author);
+        Assert.assertEquals(3, authorDaoJdbc.count());
+        Assert.assertEquals(102, author.getId());
+    }
+
+    @Test(expected = Exception.class)
+    public void deleteByIdWithException() {
+        authorDaoJdbc.deleteById(101);
+
+    }
+
+    @Test
+    public void deleteById() {
+        authorDaoJdbc.deleteById(99);
+        Assert.assertEquals(1, authorDaoJdbc.count());
     }
 }
