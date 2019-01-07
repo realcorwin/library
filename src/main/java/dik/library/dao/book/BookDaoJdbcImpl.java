@@ -49,7 +49,7 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public List<Book> getAllBook() {
-        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre order by afirstname";
+        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre order by asecondname";
                 //"select * from book";
         return namedJdbcTemplate.query(query, bookRowMapper);
     }

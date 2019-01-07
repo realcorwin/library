@@ -51,7 +51,7 @@ public class BookTest {
     public void testGetById(){
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", 1L);
-        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre where id = :id";
+        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre where b.id = :id";
         when(namedJdbcTemplate.queryForObject(query, params, bookRowMapper))
                 .thenReturn(new Book(1, "nameBook", "description",
                         new Author(1, "name1", "name2"),
