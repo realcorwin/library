@@ -2,7 +2,6 @@ spring:
   shell:
     interactive:
       enabled: false
-datasource:
-  initialize: true
-  schema: schema-test.sql
-  data: data-test.sql
+  datasource:
+    initialize: true
+    data: data-test.sql

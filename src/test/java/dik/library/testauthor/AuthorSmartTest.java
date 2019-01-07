@@ -26,7 +26,7 @@ public class AuthorSmartTest {
 
     @Test
     public void count() {
-        Assert.assertEquals(2, authorDaoJdbc.count());
+        Assert.assertEquals(1, authorDaoJdbc.count());
     }
 
     @Test
@@ -37,7 +37,6 @@ public class AuthorSmartTest {
     @Test
     public void getAll() {
         List<Author> authors = authorDaoJdbc.getAllAuthor();
-        Assert.assertEquals("Roger", authors.get(0).getFirstName());
-        Assert.assertEquals("firstname101", authors.get(1).getFirstName());
+        Assert.assertEquals("firstname101", authors.get(0).getFirstName());
     }
 }

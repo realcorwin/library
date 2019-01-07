@@ -27,7 +27,7 @@ public class BookSmartTest {
 
     @Test
     public void count() {
-        Assert.assertEquals(2, bookDaoJdbc.count());
+        Assert.assertEquals(1, bookDaoJdbc.count());
     }
 
     @Test
@@ -38,6 +38,6 @@ public class BookSmartTest {
     @Test
     public void getAll() {
         List<Book> books = bookDaoJdbc.getAllBook();
-        Assert.assertEquals("name1003", books.get(1).getName());
+        Assert.assertEquals("name1003", books.get(0).getName());
     }
 }
