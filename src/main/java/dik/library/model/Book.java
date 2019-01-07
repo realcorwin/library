@@ -6,10 +6,8 @@ public class Book {
     private String name;
     private String description;
 
-    private long id_author;
     private Author author;
 
-    private long id_genre;
     private Genre genre;
 
     public Book(long id, String name, String description, Author author, Genre genre) {
@@ -55,28 +53,12 @@ public class Book {
         this.description = description;
     }
 
-    public long getId_author() {
-        return id_author;
-    }
-
-    public void setId_author(long id_author) {
-        this.id_author = id_author;
-    }
-
     public Author getAuthor() {
         return author;
     }
 
     public void setAuthor(Author author) {
         this.author = author;
-    }
-
-    public long getId_genre() {
-        return id_genre;
-    }
-
-    public void setId_genre(long id_genre) {
-        this.id_genre = id_genre;
     }
 
     public Genre getGenre() {

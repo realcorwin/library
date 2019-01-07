@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.sql.DataSource;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
@@ -34,6 +37,16 @@ public class AuthorTest {
 
     @Autowired
     AuthorDaoJdbcImpl authorDaoJdbc;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Test
+    public void replacesDefinedDataSourceWithEmbeddedDefault() throws Exception {
+        String product = this.dataSource.getConnection().getMetaData()
+                .getDatabaseProductName();
+        assertThat(product).isEqualTo("H2");
+    }
 
     @Test
     public void testAuthorCount() {

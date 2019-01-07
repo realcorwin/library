@@ -41,7 +41,7 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public Book getById(long id) {
-        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre where id = :id";
+        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre where b.id = :id";
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);
         return namedJdbcTemplate.queryForObject(query, params, bookRowMapper);
@@ -49,7 +49,7 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public List<Book> getAllBook() {
-        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre";
+        String query = "select b.id, b.name, b.description, a.id aid, a.firstname afirstname, a.secondname asecondname, g.id gid, g.genrename ggenrename from book b inner join author a on a.id = b.id_author inner join genre g on g.id = b.id_genre order by afirstname";
                 //"select * from book";
         return namedJdbcTemplate.query(query, bookRowMapper);
     }
@@ -72,8 +72,6 @@ public class BookDaoJdbcImpl implements BookDao {
         params.put("id", book.getId());
         params.put("name", book.getName());
         params.put("description", book.getDescription());
-        params.put("id_author", book.getId_author());
-        params.put("id_genre", book.getId_genre());
         namedJdbcTemplate.update(query, params);
         authorDaoJdbc.insert(author);
         genreDaoJdbc.insert(genre);
