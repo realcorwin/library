@@ -1,6 +1,5 @@
 package dik.library.dao.book;
 
-import dik.library.dao.author.AuthorDao;
 import dik.library.dao.author.AuthorDaoJdbcImpl;
 import dik.library.dao.genre.GenreDaoJdbcImpl;
 import dik.library.model.Author;
@@ -28,12 +27,23 @@ public class BookRowMapper implements RowMapper<Book> {
 
     @Override
     public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-        Author author = authorDaoJdbc.getById(resultSet.getInt("id_author"));
+        /*Author author = authorDaoJdbc.getById(resultSet.getInt("id_author"));
         Genre genre = genreDaoJdbc.getById(resultSet.getInt("id_genre"));
         return new Book(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
                 resultSet.getString("description"),
-                author, genre);
+                author, genre);*/
+        return new Book(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description"),
+                new Author(
+                        resultSet.getLong("aid"),
+                        resultSet.getString("afirstname"),
+                        resultSet.getString("asecondname")),
+                new Genre(
+                        resultSet.getLong("gid"),
+                        resultSet.getString("ggenrename")));
     }
 }

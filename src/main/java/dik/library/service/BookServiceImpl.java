@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getById(int id) {
+    public Book getById(long id) {
         return bookDaoJdbc.getById(id);
     }
 
@@ -35,12 +35,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void insert(int id, String name, String description, int idAuthor, String firstName, String secondName, int idGenre, String genreName) {
-        bookDaoJdbc.insert(new Book(id, name, description, new Author(idAuthor, firstName, secondName), new Genre(idGenre, genreName)));
+    public void insert(Book book) {
+        bookDaoJdbc.insert(book);
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         bookDaoJdbc.deleteById(id);
     }
 }

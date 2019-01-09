@@ -12,15 +12,18 @@ import java.util.Map;
 @Repository
 public class AuthorDaoJdbcImpl implements AuthorDao {
 
-    private final NamedParameterJdbcTemplate namedJdbcTemplate;
+//    @Autowired
+    private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-    private final AuthorRowMapper authorRowMapper;
+//    @Autowired
+    private AuthorRowMapper authorRowMapper;
 
     @Autowired
     public AuthorDaoJdbcImpl(NamedParameterJdbcTemplate namedJdbcTemplate, AuthorRowMapper authorRowMapper) {
         this.namedJdbcTemplate = namedJdbcTemplate;
         this.authorRowMapper = authorRowMapper;
     }
+
 
     @Override
     public int count() {
@@ -30,7 +33,7 @@ public class AuthorDaoJdbcImpl implements AuthorDao {
     }
 
     @Override
-    public Author getById(int id) {
+    public Author getById(long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);
         String query = "select * from author where id = :id";
@@ -44,7 +47,7 @@ public class AuthorDaoJdbcImpl implements AuthorDao {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         final Map<String, Object> params = new HashMap<>(1);
         params.put("id", id);
         String query = "delete from author where id = :id";

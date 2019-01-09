@@ -22,17 +22,17 @@ public class GenreCommands {
     }
 
     @ShellMethod("Genre get by id")
-    public String genreGetById(@ShellOption int id){
+    public String genreGetById(@ShellOption long id){
         return genreService.getById(id).toString();
     }
 
     @ShellMethod("Genre delete by id")
-    public void genreDeleteById(@ShellOption int id){
+    public void genreDeleteById(@ShellOption long id){
         genreService.deleteById(id);
     }
 
     @ShellMethod("Genre insert")
-    public void genreInsert(@ShellOption int id, @ShellOption String genreName){
+    public void genreInsert(@ShellOption long id, @ShellOption String genreName){
         genreService.insert(id, genreName);
     }
 

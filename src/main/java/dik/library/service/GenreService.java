@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface GenreService {
     int count();
-    Genre getById(int id);
+    Genre getById(long id);
     List<Genre> getAllGenre();
-    void insert(int id, String genreName);
-    void deleteById(int id);
+    void insert(long id, String genreName);
+    void deleteById(long id);
 }

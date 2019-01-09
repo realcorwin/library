@@ -2,10 +2,10 @@ package dik.library.model;
 
 public class Genre {
 
-    private int id;
+    private long id;
     private String genreName;
 
-    public Genre(int id, String genreName) {
+    public Genre(long id, String genreName) {
         this.id = id;
         this.genreName = genreName;
     }
@@ -18,11 +18,11 @@ public class Genre {
                 '}';
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

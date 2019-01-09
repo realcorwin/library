@@ -22,17 +22,17 @@ public class AuthorCommands {
     }
 
     @ShellMethod("Author get by id")
-    public String authorGetById(@ShellOption int id){
+    public String authorGetById(@ShellOption long id){
         return authorService.getById(id).toString();
     }
 
     @ShellMethod("Author delete by id")
-    public void authorDeleteById(@ShellOption int id){
+    public void authorDeleteById(@ShellOption long id){
         authorService.deleteById(id);
     }
 
     @ShellMethod("Author insert")
-    public void authorInsert(@ShellOption int id, @ShellOption String firstName, @ShellOption String secondName){
+    public void authorInsert(@ShellOption long id, @ShellOption String firstName, @ShellOption String secondName){
         authorService.insert(id, firstName, secondName);
     }
 
