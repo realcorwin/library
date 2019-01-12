@@ -1,13 +1,24 @@
 package dik.library.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String description;
 
+    @MapsId
+    @OneToOne(targetEntity = Author.class)
+    @JoinColumn(name = "id_author")
     private Author author;
 
+    @MapsId
+    @OneToOne(targetEntity = Genre.class)
+    @JoinColumn(name = "id_genre")
     private Genre genre;
 
     public Book(long id, String name, String description, Author author, Genre genre) {
