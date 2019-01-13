@@ -39,6 +39,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void deleteById(long id) {
-        authorDaoJdbc.getById(id);
+        authorDaoJdbc.deleteById(id);
     }
 }

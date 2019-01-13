@@ -1,4 +1,8 @@
-jpa:
-  generate-ddl: false
-  hibernate:
-    ddl-auto: none
+spring:
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+  h2:
+    console:
+      enabled: true

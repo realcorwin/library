@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Genre {
@@ -13,8 +14,15 @@ public class Genre {
     private long id;
     private String genreName;
 
+    public Genre() {
+    }
+
     public Genre(long id, String genreName) {
         this.id = id;
+        this.genreName = genreName;
+    }
+
+    public Genre(String genreName) {
         this.genreName = genreName;
     }
 
@@ -40,5 +48,18 @@ public class Genre {
 
     public void setGenreName(String genreName) {
         this.genreName = genreName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Genre genre = (Genre) o;
+        return Objects.equals(genreName, genre.genreName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(genreName);
     }
 }
