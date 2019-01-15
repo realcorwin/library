@@ -40,4 +40,9 @@ public class CommentDaoJpaImpl implements CommentDao {
     public void insert(Comment comment) {
         entityManager.persist(comment);
     }
+
+    @Override
+    public List<Comment> getAllByBookId(long bookId) {
+        return entityManager.createQuery("select c from Comment c where id_book = :id_book", Comment.class).setParameter("id_book", bookId).getResultList();
+    }
 }

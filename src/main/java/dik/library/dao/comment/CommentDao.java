@@ -15,4 +15,6 @@ public interface CommentDao {
     public void deleteById(long id);
 
     public void insert(Comment comment);
+
+    public List<Comment> getAllByBookId(long bookId);
 }
