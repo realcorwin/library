@@ -18,7 +18,7 @@ public class BookServiceJpaImpl implements BookServiceJpa {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return bookDaoJpa.count();
     }
 

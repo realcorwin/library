@@ -23,7 +23,7 @@ public class CommentServiceJpaImpl implements CommentServiceJpa {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return commentDaoJpa.count();
     }
 

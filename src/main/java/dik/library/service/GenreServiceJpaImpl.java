@@ -19,7 +19,7 @@ public class GenreServiceJpaImpl implements GenreServiceJpa {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return genreDaoJpa.count();
     }
 

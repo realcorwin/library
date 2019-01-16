@@ -1,13 +1,13 @@
-package dik.library.service;
+package dik.library.dao.genre;
 
 import dik.library.model.Genre;
 
 import java.util.List;
 
-public interface GenreServiceJpa {
+public interface GenreDaoJpa {
     long count();
     Genre getById(long id);
     List<Genre> getAllGenre();
-    void insert(String genreName);
     void deleteById(long id);
+    void insert(Genre genre);
 }

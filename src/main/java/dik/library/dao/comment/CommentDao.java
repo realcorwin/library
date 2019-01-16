@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommentDao {
 
-    public int count();
+    public long count();
 
     public Comment getById(long id);
 

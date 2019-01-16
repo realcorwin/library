@@ -11,14 +11,14 @@ import java.util.List;
 @SuppressWarnings("JpaQlInspection")
 @Repository
 @Transactional
-public class GenreDaoJpaImpl implements GenreDao {
+public class GenreDaoJpaImpl implements GenreDaoJpa {
 
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public int count() {
+    public long count() {
         return (int) entityManager.createQuery("select count(g) from Genre g").getSingleResult();
     }
 

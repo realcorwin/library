@@ -18,7 +18,7 @@ public class AuthorServiceJpaImpl implements AuthorServiceJpa {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return authorDaoJpa.count();
     }
 

@@ -11,14 +11,14 @@ import java.util.List;
 @SuppressWarnings("JpaQlInspection")
 @Repository
 @Transactional
-public class AuthorDaoJpaImpl implements AuthorDao {
+public class AuthorDaoJpaImpl implements AuthorDaoJpa {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public int count() {
-        return (int) entityManager.createQuery("select count(a) from Author a").getSingleResult();
+    public long count() {
+        return (Long) entityManager.createQuery("select count(a) from Author a").getSingleResult();
     }
 
     @Override

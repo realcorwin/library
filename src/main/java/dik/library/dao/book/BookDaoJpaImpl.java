@@ -11,13 +11,13 @@ import java.util.List;
 @SuppressWarnings("JpaQlInspection")
 @Repository
 @Transactional
-public class BookDaoJpaImpl implements BookDao {
+public class BookDaoJpaImpl implements BookDaoJpa {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    public int count() {
+    public long count() {
         return (int) entityManager.createQuery("select count(b) from Book b").getSingleResult();
     }
 
