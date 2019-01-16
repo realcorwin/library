@@ -1,9 +1,6 @@
 package dik.library.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -11,8 +8,13 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private long id;
+
+    @Column(name="firstname")
     private String firstName;
+
+    @Column(name="secondname")
     private String secondName;
 
     public Author() {
