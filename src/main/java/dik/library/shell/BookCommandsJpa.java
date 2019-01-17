@@ -1,6 +1,8 @@
 package dik.library.shell;
 
+import dik.library.model.Author;
 import dik.library.model.Book;
+import dik.library.model.Genre;
 import dik.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -33,6 +35,14 @@ public class BookCommandsJpa {
     public void bookInsert(@ShellOption String name, @ShellOption String description,
                            @ShellOption long authorId,
                            @ShellOption long genreId){
+        /*Author author = authorService.getById(authorId);
+        Genre genre = genreService.getById(genreId);
+        Book book = new Book();
+        book.setAuthor(author);
+        book.setGenre(genre);
+        book.setName(name);
+        book.setDescription(description);
+        bookService.insert(book);*/
         bookService.insert(new Book(name, description, authorService.getById(authorId), genreService.getById(genreId)));
 
     }

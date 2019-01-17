@@ -38,6 +38,6 @@ public class AuthorDaoJpaImpl implements AuthorDaoJpa {
 
     @Override
     public void insert(Author author) {
-        entityManager.persist(author);
+        entityManager.merge(author);
     }
 }

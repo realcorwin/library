@@ -18,7 +18,7 @@ public class BookDaoJpaImpl implements BookDaoJpa {
 
     @Override
     public long count() {
-        return (int) entityManager.createQuery("select count(b) from Book b").getSingleResult();
+        return (Long) entityManager.createQuery("select count(b) from Book b").getSingleResult();
     }
 
     @Override

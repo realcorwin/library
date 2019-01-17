@@ -19,7 +19,7 @@ public class GenreDaoJpaImpl implements GenreDaoJpa {
 
     @Override
     public long count() {
-        return (int) entityManager.createQuery("select count(g) from Genre g").getSingleResult();
+        return (Long) entityManager.createQuery("select count(g) from Genre g").getSingleResult();
     }
 
     @Override
