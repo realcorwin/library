@@ -5,3 +5,7 @@ spring:
   datasource:
     initialize: true
     data: data-test.sql
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none

@@ -12,12 +12,10 @@ public class Book {
     private String name;
     private String description;
 
-    @MapsId
     @OneToOne(targetEntity = Author.class)
     @JoinColumn(name = "id_author")
     private Author author;
 
-    @MapsId
     @OneToOne(targetEntity = Genre.class)
     @JoinColumn(name = "id_genre")
     private Genre genre;

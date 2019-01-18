@@ -38,6 +38,6 @@ public class BookDaoJpaImpl implements BookDaoJpa {
 
     @Override
     public void insert(Book book) {
-        entityManager.persist(book);
+        entityManager.merge(book);
     }
 }

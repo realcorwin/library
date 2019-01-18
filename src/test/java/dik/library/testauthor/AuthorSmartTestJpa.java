@@ -11,7 +11,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.sql.DataSource;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -44,12 +47,6 @@ public class AuthorSmartTestJpa {
         authorDaoJpa.insert(author);
         Assert.assertEquals(3, authorDaoJpa.count());
         Assert.assertEquals(102, author.getId());
-    }
-
-    @Test(expected = Exception.class)
-    public void deleteByIdWithException() {
-        authorDaoJpa.deleteById(101);
-
     }
 
     @Test

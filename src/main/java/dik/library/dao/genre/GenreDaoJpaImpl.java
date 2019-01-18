@@ -39,6 +39,6 @@ public class GenreDaoJpaImpl implements GenreDaoJpa {
 
     @Override
     public void insert(Genre genre) {
-        entityManager.persist(genre);
+        entityManager.merge(genre);
     }
 }
