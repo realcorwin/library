@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class AuthorDbTest {
+public class DbTest {
 
     @Autowired
     private DataSource dataSource;
