@@ -21,7 +21,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @Import({BookDaoJpaImpl.class, CommentDaoJpaImpl.class})
-public class CommentSmartTestJpa {
+public class CommentJpaTest {
 
     @Autowired
     BookDaoJpaImpl bookDaoJpa;

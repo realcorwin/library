@@ -1,6 +1,5 @@
 package dik.library.shell;
 
-import dik.library.service.GenreService;
 import dik.library.service.GenreServiceJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;

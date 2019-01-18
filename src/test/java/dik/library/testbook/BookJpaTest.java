@@ -1,15 +1,8 @@
 package dik.library.testbook;
 
-import dik.library.dao.author.AuthorDaoJdbcImpl;
 import dik.library.dao.author.AuthorDaoJpaImpl;
-import dik.library.dao.author.AuthorRowMapper;
-import dik.library.dao.book.BookDaoJdbcImpl;
 import dik.library.dao.book.BookDaoJpaImpl;
-import dik.library.dao.book.BookRowMapper;
-import dik.library.dao.comment.CommentDaoJpaImpl;
-import dik.library.dao.genre.GenreDaoJdbcImpl;
 import dik.library.dao.genre.GenreDaoJpaImpl;
-import dik.library.dao.genre.GenreRowMapper;
 import dik.library.model.Author;
 import dik.library.model.Book;
 import dik.library.model.Genre;
@@ -17,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,7 +19,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @Import({BookDaoJpaImpl.class, AuthorDaoJpaImpl.class, GenreDaoJpaImpl.class})
-public class BookSmartTestJpa {
+public class BookJpaTest {
 
     @Autowired
     BookDaoJpaImpl bookDaoJpa;

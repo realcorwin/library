@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 //@Sql("/data-test.sql")
 @Import(AuthorDaoJpaImpl.class)
-public class AuthorSmartTestJpa {
+public class AuthorJpaTest {
 
     @Autowired
     AuthorDaoJpaImpl authorDaoJpa;

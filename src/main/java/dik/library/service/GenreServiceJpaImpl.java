@@ -1,6 +1,5 @@
 package dik.library.service;
 
-import dik.library.dao.genre.GenreDaoJdbcImpl;
 import dik.library.dao.genre.GenreDaoJpaImpl;
 import dik.library.model.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
