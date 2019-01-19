@@ -4,7 +4,7 @@ import dik.library.model.Author;
 
 import java.util.List;
 
-public interface AuthorServiceJpa {
+public interface AuthorService {
     long count();
     Author getById(long id);
     List<Author> getAllAuthor();

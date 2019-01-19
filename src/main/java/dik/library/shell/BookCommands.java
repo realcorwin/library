@@ -1,8 +1,6 @@
 package dik.library.shell;
 
-import dik.library.model.Author;
 import dik.library.model.Book;
-import dik.library.model.Genre;
 import dik.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -10,14 +8,14 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
-public class BookCommandsJpa {
+public class BookCommands {
 
     @Autowired
-    private BookServiceJpa bookService;
+    private BookService bookService;
     @Autowired
-    private AuthorServiceJpa authorService;
+    private AuthorService authorService;
     @Autowired
-    private GenreServiceJpa genreService;
+    private GenreService genreService;
 
     @ShellMethod("Book count")
     public long bookCount(){

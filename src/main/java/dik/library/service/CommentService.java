@@ -4,7 +4,7 @@ import dik.library.model.Comment;
 
 import java.util.List;
 
-public interface CommentServiceJpa {
+public interface CommentService {
     long count();
     Comment getById(long id);
     List<Comment> getAllComment();

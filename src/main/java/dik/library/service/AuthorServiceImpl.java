@@ -2,43 +2,45 @@ package dik.library.service;
 
 import dik.library.dao.author.AuthorDaoJpaImpl;
 import dik.library.model.Author;
+import dik.library.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class AuthorServiceJpaImpl implements AuthorServiceJpa {
+public class AuthorServiceImpl implements AuthorService {
 
-    private final AuthorDaoJpaImpl authorDaoJpa;
+    private final AuthorRepository authorRepository;
 
     @Autowired
-    public AuthorServiceJpaImpl(AuthorDaoJpaImpl authorDaoJpa) {
-        this.authorDaoJpa = authorDaoJpa;
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
     @Override
     public long count() {
-        return authorDaoJpa.count();
+        return authorRepository.count();
     }
 
     @Override
     public Author getById(long id) {
-        return authorDaoJpa.getById(id);
+        return authorRepository.findById(id).orElse(null);
+        // return authorRepository.getOne(id); //no sessions
     }
 
     @Override
     public List<Author> getAllAuthor() {
-        return authorDaoJpa.getAllAuthor();
+        return authorRepository.findAll();
     }
 
     @Override
     public void insert(String firstName, String secondName) {
-        authorDaoJpa.insert(new Author(firstName, secondName));
+        authorRepository.save(new Author(firstName, secondName));
     }
 
     @Override
     public void deleteById(long id) {
-        authorDaoJpa.deleteById(id);
+        authorRepository.deleteById(id);
     }
 }

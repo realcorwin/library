@@ -4,7 +4,7 @@ import dik.library.model.Genre;
 
 import java.util.List;
 
-public interface GenreServiceJpa {
+public interface GenreService {
     long count();
     Genre getById(long id);
     List<Genre> getAllGenre();

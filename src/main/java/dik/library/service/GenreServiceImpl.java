@@ -2,43 +2,44 @@ package dik.library.service;
 
 import dik.library.dao.genre.GenreDaoJpaImpl;
 import dik.library.model.Genre;
+import dik.library.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GenreServiceJpaImpl implements GenreServiceJpa {
+public class GenreServiceImpl implements GenreService {
 
-    final private GenreDaoJpaImpl genreDaoJpa;
+    private final GenreRepository genreRepository;
 
     @Autowired
-    public GenreServiceJpaImpl(GenreDaoJpaImpl genreDaoJpa) {
-        this.genreDaoJpa = genreDaoJpa;
+    public GenreServiceImpl(GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
     }
 
     @Override
     public long count() {
-        return genreDaoJpa.count();
+        return genreRepository.count();
     }
 
     @Override
     public Genre getById(long id) {
-        return genreDaoJpa.getById(id);
+        return genreRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Genre> getAllGenre() {
-        return genreDaoJpa.getAllGenre();
+        return genreRepository.findAll();
     }
 
     @Override
     public void insert(String genreName) {
-        genreDaoJpa.insert(new Genre(genreName));
+        genreRepository.save(new Genre(genreName));
     }
 
     @Override
     public void deleteById(long id) {
-        genreDaoJpa.deleteById(id);
+        genreRepository.deleteById(id);
     }
 }
