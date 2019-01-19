@@ -1,13 +1,13 @@
-package dik.library.dao.book;
+package dik.library.service;
 
 import dik.library.model.Book;
 
 import java.util.List;
 
-public interface BookDao {
-    int count();
+public interface BookServiceJpa {
+    long count();
     Book getById(long id);
     List<Book> getAllBook();
-    void deleteById(long id);
     void insert(Book book);
+    void deleteById(long id);
 }

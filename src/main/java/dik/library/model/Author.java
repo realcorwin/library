@@ -1,10 +1,29 @@
 package dik.library.model;
 
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
 public class Author {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private long id;
+
+    @Column(name="firstname")
     private String firstName;
+
+    @Column(name="secondname")
     private String secondName;
+
+    public Author() {
+    }
+
+    public Author(String firstName, String secondName) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+    }
 
     public Author(long id, String firstName, String secondName) {
         this.id = id;
@@ -43,5 +62,19 @@ public class Author {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(firstName, author.firstName) &&
+                Objects.equals(secondName, author.secondName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, secondName);
     }
 }

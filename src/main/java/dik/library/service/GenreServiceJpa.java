@@ -4,10 +4,10 @@ import dik.library.model.Genre;
 
 import java.util.List;
 
-public interface GenreService {
-    int count();
+public interface GenreServiceJpa {
+    long count();
     Genre getById(long id);
     List<Genre> getAllGenre();
-    void insert(long id, String genreName);
+    void insert(String genreName);
     void deleteById(long id);
 }

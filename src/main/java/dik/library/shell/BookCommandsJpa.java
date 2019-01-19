@@ -1,27 +1,26 @@
 package dik.library.shell;
 
+import dik.library.model.Author;
 import dik.library.model.Book;
-import dik.library.service.AuthorService;
-import dik.library.service.BookService;
-import dik.library.service.GenreService;
+import dik.library.model.Genre;
+import dik.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
-public class BookCommands {
+public class BookCommandsJpa {
 
     @Autowired
-    private BookService bookService;
+    private BookServiceJpa bookService;
     @Autowired
-    private AuthorService authorService;
+    private AuthorServiceJpa authorService;
     @Autowired
-    private GenreService genreService;
-
+    private GenreServiceJpa genreService;
 
     @ShellMethod("Book count")
-    public int bookCount(){
+    public long bookCount(){
         return  bookService.count();
     }
     @ShellMethod("Book get by id")
@@ -33,10 +32,18 @@ public class BookCommands {
         bookService.deleteById(id);
     }
     @ShellMethod("Book insert")
-    public void bookInsert(@ShellOption long id, @ShellOption String name, @ShellOption String description,
+    public void bookInsert(@ShellOption String name, @ShellOption String description,
                            @ShellOption long authorId,
                            @ShellOption long genreId){
-        bookService.insert(new Book(id, name, description, authorService.getById(authorId), genreService.getById(genreId)));
+        /*Author author = authorService.getById(authorId);
+        Genre genre = genreService.getById(genreId);
+        Book book = new Book();
+        book.setAuthor(author);
+        book.setGenre(genre);
+        book.setName(name);
+        book.setDescription(description);
+        bookService.insert(book);*/
+        bookService.insert(new Book(name, description, authorService.getById(authorId), genreService.getById(genreId)));
 
     }
     @ShellMethod("Book list")

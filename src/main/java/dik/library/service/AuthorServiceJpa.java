@@ -1,13 +1,13 @@
-package dik.library.dao.author;
+package dik.library.service;
 
 import dik.library.model.Author;
 
 import java.util.List;
 
-public interface AuthorDao {
-    int count();
+public interface AuthorServiceJpa {
+    long count();
     Author getById(long id);
     List<Author> getAllAuthor();
+    void insert(String firstName, String secondName);
     void deleteById(long id);
-    void insert(Author author);
 }

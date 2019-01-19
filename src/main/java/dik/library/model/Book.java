@@ -1,14 +1,34 @@
 package dik.library.model;
 
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String description;
 
+    @OneToOne(targetEntity = Author.class)
+    @JoinColumn(name = "id_author")
     private Author author;
 
+    @OneToOne(targetEntity = Genre.class)
+    @JoinColumn(name = "id_genre")
     private Genre genre;
+
+    public Book() {
+    }
+
+    public Book(String name, String description, Author author, Genre genre) {
+        this.name = name;
+        this.description = description;
+        this.author = author;
+        this.genre = genre;
+    }
 
     public Book(long id, String name, String description, Author author, Genre genre) {
         this.id = id;
@@ -67,5 +87,19 @@ public class Book {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return name.equals(book.name) &&
+                Objects.equals(author, book.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, author);
     }
 }

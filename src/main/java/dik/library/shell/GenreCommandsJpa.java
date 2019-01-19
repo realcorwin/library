@@ -1,43 +1,43 @@
 package dik.library.shell;
 
-import dik.library.service.GenreService;
+import dik.library.service.GenreServiceJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
-public class GenreCommands {
+public class GenreCommandsJpa {
 
-    private final GenreService genreService;
+    private final GenreServiceJpa genreServiceJpa;
 
     @Autowired
-    public GenreCommands(GenreService genreService) {
-        this.genreService = genreService;
+    public GenreCommandsJpa(GenreServiceJpa genreServiceJpa) {
+        this.genreServiceJpa = genreServiceJpa;
     }
 
     @ShellMethod("Genre count")
-    public int genreCount(){
-        return  genreService.count();
+    public long genreCount(){
+        return  genreServiceJpa.count();
     }
 
     @ShellMethod("Genre get by id")
     public String genreGetById(@ShellOption long id){
-        return genreService.getById(id).toString();
+        return genreServiceJpa.getById(id).toString();
     }
 
     @ShellMethod("Genre delete by id")
     public void genreDeleteById(@ShellOption long id){
-        genreService.deleteById(id);
+        genreServiceJpa.deleteById(id);
     }
 
     @ShellMethod("Genre insert")
-    public void genreInsert(@ShellOption long id, @ShellOption String genreName){
-        genreService.insert(id, genreName);
+    public void genreInsert(@ShellOption String genreName){
+        genreServiceJpa.insert(genreName);
     }
 
     @ShellMethod("Genre list")
     public String genreList(){
-        return  genreService.getAllGenre().toString();
+        return  genreServiceJpa.getAllGenre().toString();
     }
 }
