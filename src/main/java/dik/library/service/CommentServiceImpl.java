@@ -1,7 +1,5 @@
 package dik.library.service;
 
-import dik.library.dao.book.BookDaoJpaImpl;
-import dik.library.dao.comment.CommentDaoJpaImpl;
 import dik.library.model.Book;
 import dik.library.model.Comment;
 import dik.library.repository.BookRepository;
