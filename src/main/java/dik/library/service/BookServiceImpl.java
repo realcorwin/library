@@ -1,44 +1,44 @@
 package dik.library.service;
 
-import dik.library.dao.book.BookDaoJpaImpl;
 import dik.library.model.Book;
+import dik.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BookServiceJpaImpl implements BookServiceJpa {
+public class BookServiceImpl implements BookService {
 
-    final private BookDaoJpaImpl bookDaoJpa;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public BookServiceJpaImpl(BookDaoJpaImpl bookDaoJpa) {
-        this.bookDaoJpa = bookDaoJpa;
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
     @Override
     public long count() {
-        return bookDaoJpa.count();
+        return bookRepository.count();
     }
 
     @Override
     public Book getById(long id) {
-        return bookDaoJpa.getById(id);
+        return bookRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Book> getAllBook() {
-        return bookDaoJpa.getAllBook();
+        return bookRepository.findAll();
     }
 
     @Override
     public void insert(Book book) {
-        bookDaoJpa.insert(book);
+        bookRepository.save(book);
     }
 
     @Override
     public void deleteById(long id) {
-        bookDaoJpa.deleteById(id);
+        bookRepository.deleteById(id);
     }
 }

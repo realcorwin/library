@@ -4,7 +4,7 @@ import dik.library.model.Book;
 
 import java.util.List;
 
-public interface BookServiceJpa {
+public interface BookService {
     long count();
     Book getById(long id);
     List<Book> getAllBook();

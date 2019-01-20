@@ -1,8 +1,11 @@
 package dik.library.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Objects;
 
+@Data
 @Entity
 public class Genre {
 
@@ -25,40 +28,4 @@ public class Genre {
         this.genreName = genreName;
     }
 
-    @Override
-    public String toString() {
-        return "Genre{" +
-                "id=" + id +
-                ", genreName='" + genreName + '\'' +
-                '}';
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getGenreName() {
-        return genreName;
-    }
-
-    public void setGenreName(String genreName) {
-        this.genreName = genreName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Genre genre = (Genre) o;
-        return Objects.equals(genreName, genre.genreName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(genreName);
-    }
 }
