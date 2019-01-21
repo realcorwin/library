@@ -60,4 +60,10 @@ public class CommentTest {
         commentRepository.deleteById(503L);
         Assert.assertEquals(2, commentRepository.count());
     }
+
+    @Test
+    public void cascadeOnDeleteBook() {
+        bookRepository.deleteById(1003L);
+        Assert.assertEquals(2, commentRepository.count());
+    }
 }
