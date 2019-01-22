@@ -22,12 +22,12 @@ public class AuthorCommands {
     }
 
     @ShellMethod("Author get by id")
-    public String authorGetById(@ShellOption long id){
+    public String authorGetById(@ShellOption String id){
         return authorService.getById(id).toString();
     }
 
     @ShellMethod("Author delete by id")
-    public void authorDeleteById(@ShellOption long id){
+    public void authorDeleteById(@ShellOption String id){
         authorService.deleteById(id);
     }
 

@@ -22,27 +22,18 @@ public class BookCommands {
         return  bookService.count();
     }
     @ShellMethod("Book get by id")
-    public String bookGetById(@ShellOption long id){
+    public String bookGetById(@ShellOption String id){
         return bookService.getById(id).toString();
     }
     @ShellMethod("Book delete by id")
-    public void bookDeleteById(@ShellOption long id){
+    public void bookDeleteById(@ShellOption String id){
         bookService.deleteById(id);
     }
     @ShellMethod("Book insert")
     public void bookInsert(@ShellOption String name, @ShellOption String description,
-                           @ShellOption long authorId,
-                           @ShellOption long genreId){
-        /*Author author = authorService.getById(authorId);
-        Genre genre = genreService.getById(genreId);
-        Book book = new Book();
-        book.setAuthor(author);
-        book.setGenre(genre);
-        book.setName(name);
-        book.setDescription(description);
-        bookService.insert(book);*/
+                           @ShellOption String authorId,
+                           @ShellOption String genreId){
         bookService.insert(new Book(name, description, authorService.getById(authorId), genreService.getById(genreId)));
-
     }
     @ShellMethod("Book list")
     public String bookList(){

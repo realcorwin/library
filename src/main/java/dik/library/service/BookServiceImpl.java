@@ -23,7 +23,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getById(long id) {
+    public Book getById(String id) {
         return bookRepository.findById(id).orElse(null);
     }
 
@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(String id) {
         bookRepository.deleteById(id);
     }
 }
