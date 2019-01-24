@@ -21,7 +21,7 @@ public class CascadeDeleteMongoEventListener extends AbstractMongoEventListener<
             for (Object key : event.getSource().values()) {
                 id = String.valueOf(key);
             }
-            if (bookRepository.findByGenreId(id) != null || bookRepository.findByAuthorId(id) != null) throw new RuntimeException();
+            if (bookRepository.findFirstByGenreId(id) != null || bookRepository.findFirstByAuthorId(id) != null) throw new RuntimeException();
         }
     }
 }
