@@ -23,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author getById(long id) {
+    public Author getById(String id) {
         return authorRepository.findById(id).orElse(null);
         // return authorRepository.getOne(id); //no sessions
     }
@@ -39,7 +39,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(String id) {
         authorRepository.deleteById(id);
     }
 }

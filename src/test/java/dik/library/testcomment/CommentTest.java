@@ -1,29 +1,25 @@
 package dik.library.testcomment;
 
+import dik.library.model.Author;
 import dik.library.model.Book;
 import dik.library.model.Comment;
+import dik.library.model.Genre;
+import dik.library.repository.AuthorRepository;
 import dik.library.repository.BookRepository;
 import dik.library.repository.CommentRepository;
+import dik.library.repository.GenreRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
+import static dik.library.TestConstants.*;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringRunner.class)
-@DataJpaTest
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
+@DataMongoTest
 public class CommentTest {
 
     @Autowired
@@ -32,32 +28,39 @@ public class CommentTest {
     @Autowired
     CommentRepository commentRepository;
 
-    @Test
-    public void count() {
-        Assert.assertEquals(3, commentRepository.count());
+    @Autowired
+    AuthorRepository authorRepository;
+
+    @Autowired
+    GenreRepository genreRepository;
+
+    private Comment comment;
+    private Author author;
+    private Book book;
+    private Genre genre;
+
+    @Before
+    public void init(){
+        author = authorRepository.save(new Author(FIRST_NAME, SECOND_NAME));
+        genre = genreRepository.save(new Genre(GENRE));
+        book = bookRepository.save(new Book(BOOK_NAME, BOOK_DESCRIPTION, author, genre));
+        comment = commentRepository.save(new Comment(COMMENT, book));
     }
 
     @Test
-    public void getByID() {
-        Assert.assertEquals("Cool", Objects.requireNonNull(commentRepository.findById(501L).orElse(null)).getComment());
+    public void testComment(){
+        Assert.assertEquals(COMMENT, comment.getComment());
     }
 
     @Test
-    public void getAll() {
-        List<Comment> comments = commentRepository.findAll();
-        Assert.assertEquals("Cool", comments.get(0).getComment());
+    public void testCount(){
+        System.out.println(commentRepository.findAll());
+        Assert.assertTrue(commentRepository.count() > 0);
     }
 
     @Test
-    public void insert() {
-        Book book = bookRepository.findById(1003L).orElse(null);
-        commentRepository.save(new Comment("Brilliant", book));
-        Assert.assertEquals(4, commentRepository.count());
-    }
-
-    @Test
-    public void deleteById() {
-        commentRepository.deleteById(503L);
-        Assert.assertEquals(2, commentRepository.count());
+    public void testDeleteAll(){
+        commentRepository.deleteAll();
+        Assert.assertEquals(0, commentRepository.count());
     }
 }

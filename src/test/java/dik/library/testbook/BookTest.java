@@ -7,26 +7,19 @@ import dik.library.repository.AuthorRepository;
 import dik.library.repository.BookRepository;
 import dik.library.repository.GenreRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
+import static dik.library.TestConstants.*;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringRunner.class)
-@DataJpaTest
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
+@DataMongoTest
 public class BookTest {
+
 
     @Autowired
     BookRepository bookRepository;
@@ -37,34 +30,42 @@ public class BookTest {
     @Autowired
     GenreRepository genreRepository;
 
-    @Test
-    public void count() {
-        Assert.assertEquals(2, bookRepository.count());
+
+    private Author author;
+    private Book book;
+    private Genre genre;
+
+    @Before
+    public void init(){
+        author = authorRepository.save(new Author(FIRST_NAME, SECOND_NAME));
+        genre = genreRepository.save(new Genre(GENRE));
+        book = bookRepository.save(new Book(BOOK_NAME, BOOK_DESCRIPTION, author, genre));
     }
 
     @Test
-    public void getByID() {
-        Assert.assertEquals("description1003", Objects.requireNonNull(bookRepository.findById(1003L).orElse(null)).getDescription());
+    public void testBookValues(){
+        Assert.assertEquals(BOOK_NAME, book.getName());
+        Assert.assertEquals(BOOK_DESCRIPTION, book.getDescription());
     }
 
     @Test
-    public void getAll() {
-        List<Book> books = bookRepository.findAll();
-        Assert.assertEquals("name1003", books.get(0).getName());
+    public void testAuthor(){
+        Assert.assertNotNull(book.getAuthor());
     }
 
     @Test
-    public void insert() {
-        Author author = authorRepository.findById(101L).orElse(null);
-        Genre genre = genreRepository.findById(22L).orElse(null);
-        Book book = new Book(1005, "name1005", "description1005", author, genre);
-        bookRepository.save(book);
-        Assert.assertEquals(3, bookRepository.count());
+    public void testGenre(){
+        Assert.assertNotNull(book.getGenre());
     }
 
     @Test
-    public void deleteById() {
-        bookRepository.deleteById(1004L);
-        Assert.assertEquals(1, bookRepository.count());
+    public void testCount(){
+        Assert.assertTrue(bookRepository.count() > 0);
+    }
+
+    @Test
+    public void testDeleteAll(){
+        bookRepository.deleteAll();
+        Assert.assertEquals(0, bookRepository.count());
     }
 }

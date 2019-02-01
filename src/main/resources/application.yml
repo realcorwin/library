@@ -1,8 +1,7 @@
 spring:
-  jpa:
-    generate-ddl: false
-    hibernate:
-      ddl-auto: none
-  h2:
-    console:
-      enabled: true
+  data:
+    mongodb:
+      authentication-database: none
+      database: library
+      port: 27017
+      host: localhost

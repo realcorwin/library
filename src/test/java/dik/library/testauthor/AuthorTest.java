@@ -3,60 +3,44 @@ package dik.library.testauthor;
 import dik.library.model.Author;
 import dik.library.repository.AuthorRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
-import java.util.List;
-import java.util.Objects;
+import static dik.library.TestConstants.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringRunner.class)
-@DataJpaTest
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
-@Transactional(propagation = Propagation.NOT_SUPPORTED)
+@DataMongoTest
 public class AuthorTest {
 
     @Autowired
     AuthorRepository authorRepository;
 
-    @Test
-    public void count() {
-        Assert.assertEquals(2, authorRepository.count());
+    private Author author;
+
+    @Before
+    public void init(){
+        author = authorRepository.save(new Author(FIRST_NAME, SECOND_NAME));
     }
 
     @Test
-    public void getByID() {
-        Assert.assertEquals("firstname101", Objects.requireNonNull(authorRepository.findById(101L).orElse(null)).getFirstName());
+    public void testAuthorNames(){
+        Assert.assertEquals(FIRST_NAME, author.getFirstName());
+        Assert.assertEquals(SECOND_NAME, author.getSecondName());
     }
 
     @Test
-    public void getAll() {
-        List<Author> authors = authorRepository.findAll();
-        Assert.assertEquals("firstname99", authors.get(0).getFirstName());
+    public void testCount(){
+        System.out.println(authorRepository.findAll());
+        Assert.assertTrue(authorRepository.count() > 0);
     }
 
     @Test
-    public void insert() {
-        Author author = new Author(102, "firstname102", "secondname102");
-        authorRepository.save(author);
-        Assert.assertEquals(3, authorRepository.count());
-        Assert.assertEquals(102, author.getId());
-    }
-
-    @Test
-    public void deleteById() {
-        authorRepository.deleteById(99L);
-        Assert.assertEquals(1, authorRepository.count());
+    public void testDeleteAll(){
+        authorRepository.deleteAll();
+        Assert.assertEquals(0, authorRepository.count());
     }
 }

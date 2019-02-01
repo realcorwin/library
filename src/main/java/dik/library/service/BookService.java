@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface BookService {
     long count();
-    Book getById(long id);
+    Book getById(String id);
     List<Book> getAllBook();
     void insert(Book book);
-    void deleteById(long id);
+    void deleteById(String id);
 }

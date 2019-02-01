@@ -22,17 +22,17 @@ public class CommentCommands {
     }
 
     @ShellMethod("Comment get by id")
-    public String commentGetById(@ShellOption long id){
+    public String commentGetById(@ShellOption String id){
         return commentService.getById(id).toString();
     }
 
     @ShellMethod("Comment delete by id")
-    public void commentDeleteById(@ShellOption long id){
+    public void commentDeleteById(@ShellOption String id){
         commentService.deleteById(id);
     }
 
     @ShellMethod("Comment insert")
-    public void commentInsert(@ShellOption long idBook, @ShellOption String comment){
+    public void commentInsert(@ShellOption String idBook, @ShellOption String comment){
         commentService.insert(idBook, comment);
     }
 
@@ -42,7 +42,7 @@ public class CommentCommands {
     }
 
     @ShellMethod("Comment list by book id")
-    public String commentListByBookId(@ShellOption long idBook) {
+    public String commentListByBookId(@ShellOption String idBook) {
         return commentService.getAllCommentByBookId(idBook).toString();
     }
 }
