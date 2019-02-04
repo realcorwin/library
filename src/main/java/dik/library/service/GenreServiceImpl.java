@@ -41,4 +41,9 @@ public class GenreServiceImpl implements GenreService {
     public void deleteById(String id) {
         genreRepository.deleteById(id);
     }
+
+    @Override
+    public void update(Genre genre) {
+        genreRepository.save(genre);
+    }
 }

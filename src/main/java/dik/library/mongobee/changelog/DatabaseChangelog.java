@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 public class DatabaseChangelog {
 
     @ChangeSet(order = "001", id = "init", author = "realcorwin")
-    public void init(DB db, MongoTemplate mongoTemplate) {
+    public void init(MongoTemplate mongoTemplate) {
 
         //mongoTemplate.getDb().drop();
         //db.dropDatabase();
