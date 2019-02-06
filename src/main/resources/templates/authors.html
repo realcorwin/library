@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Авторы</title>
+</head>
+<body>
+<div>
+    <p>
+    <h2>Авторы</h2>
+    </p>
+    <p>
+        <a href="#" th:href="@{/books}">К списку книг</a>
+    </p>
+    <p>
+        <div>
+            <form action="#" th:action="@{/createAuthor}" th:object="${author}" method="post">
+                <p>Имя автора: <input type="text" th:name="firstName"/></p>
+                <p>Фамилия автора: <input type="text" th:name="secondName"/></p>
+                <p><input type="submit" value="Добавить автора"/></p>
+            </form>
+        </div>
+    </p>
+    <table align="centre" width="40%">
+        <tr>
+            <th>Редактировать автора</th>
+            <th>Автор id</th>
+            <th>Имя автора</th>
+            <th>Фамилия автора</th>
+        </tr>
+        <tr th:each="authorV : ${authors}">
+            <form action="#" th:action="@{/deleteAuthor}" th:object="${authorV}" method="post">
+                <td><a href="#" th:text="${authorV.id}" th:href="@{/author(id=${authorV.id})}">Редактировать</a></td>
+                <td><input type="text" th:name="id" th:value="*{id}"/></td>
+                <td><input type="text" th:name="firstName" th:value="*{firstName}"/></td>
+                <td><input type="text" th:name="secondName" th:value="*{secondName}"/></td>
+                <td><input type="submit" value="Удалить автора"/></td>
+            </form>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

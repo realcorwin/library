@@ -17,13 +17,13 @@ public class GenreController {
     GenreService genreService;
 
     @RequestMapping("/genre")
-    public String author(@RequestParam String id, Model model){
+    public String genre(@RequestParam String id, Model model){
         Genre genre = genreService.getById(id);
         model.addAttribute("genre", genre);
         return "genre";
     }
     @RequestMapping("/genres")
-    public String author(Model model){
+    public String genres(Model model){
         List<Genre> genres = genreService.getAllGenre();
         Genre genre = new Genre();
         model.addAttribute("genres", genres);
