@@ -10,4 +10,5 @@ public interface BookService {
     List<Book> getAllBook();
     void insert(Book book);
     void deleteById(String id);
+    Book update(Book book);
 }

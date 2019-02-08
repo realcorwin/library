@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать книгу</title>
+</head>
+<body>
+    <h2>Книга:</h2>
+    <div>
+        <p><a href="#" th:href="@{/books}">Список книг</a></p>
+    </div>
+    <div>
+        <form action="#" th:action="@{/saveBook}" th:object="${book}" method="post">
+            <p>Название книги: <input type="text" th:name="name" th:field="*{name}"/></p>
+            <p>Описание книги: <input type="text" th:name="description" th:field="*{description}" /></p>
+            <p>
+                <label for="genre-input">Жанр: </label>
+                <select id="genre-input" th:field="*{genre}">
+                    <option th:each="genre : ${genres}"
+                            th:value="${{genre}}"
+                            th:text="${genre.genreName}">Тестовый жанр</option>
+                </select>
+            </p>
+            <div>
+                <p>
+                    <label for="authors-input">Автор: </label>
+                    <select multiple id="authors-input" th:field="*{author}">
+                        <option th:each="author : ${authors}"
+                                th:value="${{author}}"
+                                th:text="${author.id} +': '+${author.firstName} +' '+ ${author.secondName}">Test authors</option>
+                    </select>
+                </p>
+            </div>
+            <p><input type="submit" value="Сохранить"/></p>
+        </form>
+    </div>
+</body>
+</html>
