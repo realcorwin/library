@@ -37,7 +37,7 @@
                     <label for="genre-input">Жанр: </label>
                     <select id="genre-input" th:field="*{genre}">
                         <option th:each="genre : ${genres}"
-                                th:value="${{genre}}"
+                                th:value="${{genre.id}}"
                                 th:text="${genre.genreName}">Тестовый жанр
                         </option>
                     </select>

@@ -1,9 +1,7 @@
 package dik.library.controller;
 
 import dik.library.model.Author;
-import dik.library.model.Genre;
 import dik.library.service.AuthorService;
-import dik.library.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,16 +14,20 @@ import java.util.List;
 public class AuthorController
 {
 
-    @Autowired
-    AuthorService authorService;
+    private final AuthorService authorService;
 
-    @RequestMapping("/author")
+    @Autowired
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
+
+    @GetMapping("/author")
     public String author(@RequestParam String id, Model model){
         Author author = authorService.getById(id);
         model.addAttribute("author", author);
         return "author";
     }
-    @RequestMapping("/authors")
+    @GetMapping("/authors")
     public String authors(Model model){
         List<Author> authors = authorService.getAllAuthor();
         Author author = new Author();
@@ -34,19 +36,19 @@ public class AuthorController
         return "authors";
     }
 
-    @RequestMapping(value = "/deleteAuthor", method = RequestMethod.POST)
+    @PostMapping(value = "/deleteAuthor")
     public String deleteAuthor(@ModelAttribute Author author){
         authorService.deleteById(author.getId());
         return "redirect:/authors";
     }
 
-    @RequestMapping(value = "/createAuthor", method = RequestMethod.POST)
+    @PostMapping(value = "/createAuthor")
     public String addAuthor(@ModelAttribute Author author){
         authorService.insert(author.getFirstName(), author.getSecondName());
         return "redirect:/authors";
     }
 
-    @RequestMapping(value = "/editAuthor", method = RequestMethod.POST)
+    @PostMapping(value = "/editAuthor")
     public String editAuthor(@ModelAttribute Author author){
         authorService.update(author);
         return "redirect:/authors";
