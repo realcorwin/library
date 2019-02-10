@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Книга</title>
+</head>
+<body>
+    <h2>КНИГА:</h2>
+    <div>
+        <p><a href="#" th:href="@{/books}">Список книг</a></p>
+    </div>
+    <div>
+        <form action="/deleteBook" th:action="@{/deleteBook(id=${book.id})}" method="post">
+            <input type="submit" value="Delete book" />
+        </form>
+    </div>
+    <div>
+        <form action="#" th:action="@{/editBook}" th:object="${book}" method="post">
+            <p>Книга id: <input type="text" th:field="*{id}"/></p>
+            <p>Название книги: <input type="text" th:field="*{name}" /></p>
+            <p>Описание книги: <input type="text" th:field="*{description}" /></p>
+            <div id = "div">
+                <h3>Автор</h3>
+                <p><a href="#" th:href="@{/authors}">Авторы</a></p>
+                <p>
+                    <label for="author-input">Автор: </label>
+                    <select id="author-input" th:field="*{author}">
+                        <option th:each="author : ${authors}"
+                                th:value="${{author}}"
+                                th:text="${author.firstName} + ' ' + ${author.secondName}">Тестовый автор
+                        </option>
+                    </select>
+                </p>
+                <h3>Жанр</h3>
+                <p><a href="#" th:href="@{/genres}">Жанры</a></p>
+                <p>
+                    <label for="genre-input">Жанр: </label>
+                    <select id="genre-input" th:field="*{genre}">
+                        <option th:each="genre : ${genres}"
+                                th:value="${{genre.id}}"
+                                th:text="${genre.genreName}">Тестовый жанр
+                        </option>
+                    </select>
+                </p>
+            </div>
+            <p><input type="submit" value="Сохранить"/></p>
+        </form>
+    </div>
+</body>
+</html>

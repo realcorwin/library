@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Автор</title>
+</head>
+<body>
+<form action="/#" th:action="@{/deleteAuthor(id=${author.id})}" method="post">
+    <input type="submit" value="Удалить автора"/>
+</form>
+<form action="#" th:action="@{/editAuthor}" th:object="${author}" method="post">
+    <p>Автор id: <input type="text" th:field="*{id}"/></p>
+    <p>Имя автора: <input type="text" th:field="*{firstName}" /></p>
+    <p>Фамилия автора: <input type="text" th:field="*{secondName}" /></p>
+    <p><input type="submit" value="Отправить"/></p>
+</form>
+</body>
+</html>

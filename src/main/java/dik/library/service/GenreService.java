@@ -10,4 +10,5 @@ public interface GenreService {
     List<Genre> getAllGenre();
     void insert(String genreName);
     void deleteById(String id);
+    void update(Genre genre);
 }

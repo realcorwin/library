@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Жанры</title>
+</head>
+<body>
+<div>
+    <p>
+    <h2>Жанры</h2>
+    </p>
+    <p>
+        <a href="#" th:href="@{/books}">К списку книг</a>
+    </p>
+    <p>
+        <div>
+            <form action="#" th:action="@{/createGenre}" method="post">
+                <p>Жанр: <input type="text" th:name="genreName"/></p>
+                <p><input type="submit" value="Добавить жанр"/></p>
+            </form>
+        </div>
+    </p>
+    <table align="centre" width="40%">
+        <tr>
+            <th>Редактировать жанр</th>
+            <th>Жанр id</th>
+            <th>Жанр</th>
+        </tr>
+        <tr th:each="genreV : ${genres}">
+            <form action="#" th:action="@{/deleteGenre}" th:object="${genreV}" method="post">
+                <td><a href="#" th:text="${genreV.id}" th:href="@{/genre(id=${genreV.id})}">Редактировать</a></td>
+                <td><input type="text" th:name="id" th:value="*{id}"/></td>
+                <td><input type="text" th:name="genre" th:value="*{genreName}"/></td>
+                <td><input type="submit" value="Удалить жанр"/></td>
+            </form>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
