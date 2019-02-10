@@ -53,7 +53,7 @@ public class GenreControllerTest {
         mockMvc.perform(get("/genres"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("genres"))
-                .andExpect(model().attributeExists("genres", "genre"));
+                .andExpect(model().attributeExists("genres"));
         verify(genreServiceMock).getAllGenre();
     }
 

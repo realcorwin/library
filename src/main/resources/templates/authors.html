@@ -14,7 +14,7 @@
     </p>
     <p>
         <div>
-            <form action="#" th:action="@{/createAuthor}" th:object="${author}" method="post">
+            <form action="#" th:action="@{/createAuthor}" method="post">
                 <p>Имя автора: <input type="text" th:name="firstName"/></p>
                 <p>Фамилия автора: <input type="text" th:name="secondName"/></p>
                 <p><input type="submit" value="Добавить автора"/></p>

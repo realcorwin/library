@@ -52,7 +52,7 @@ public class AuthorControllerTest {
         mockMvc.perform(get("/authors"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("authors"))
-                .andExpect(model().attributeExists("authors", "author"));
+                .andExpect(model().attributeExists("authors"));
         verify(authorServiceMock).getAllAuthor();
     }
 
