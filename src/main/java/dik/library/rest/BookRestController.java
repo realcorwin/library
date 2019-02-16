@@ -30,7 +30,7 @@ public class BookRestController {
         return bookService.getById(id);
     }
 
-    @PostMapping(value = "/rest/book", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/rest/book", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void add(@RequestBody Book book) {
         bookService.insert(book);
     }

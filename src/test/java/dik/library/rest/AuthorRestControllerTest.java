@@ -1,6 +1,6 @@
 package dik.library.rest;
 
-import dik.library.controller.AuthorController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dik.library.model.Author;
 import dik.library.service.AuthorService;
 import org.junit.Before;
@@ -13,18 +13,18 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(AuthorController.class)
+@WebMvcTest(AuthorRestController.class)
 public class AuthorRestControllerTest {
 
     @Autowired
@@ -47,12 +47,48 @@ public class AuthorRestControllerTest {
     @Test
     public void authorTest() throws Exception {
         when(authorServiceMock.getById("1")).thenReturn(author);
-        mockMvc.perform(get("/rest/author/{id}", author.getId()))
+        mockMvc.perform(get(baseUrl + "{id}", author.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(author.getId()))
                 .andExpect(jsonPath("$.firstName", is(author.getFirstName())))
                 .andExpect(jsonPath("$.secondName", is(author.getSecondName())))
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
         verify(authorServiceMock).getById("1");
+    }
+
+    @Test
+    public void authorsTest() throws Exception {
+        when(authorServiceMock.getAllAuthor()).thenReturn(authors);
+        mockMvc.perform(get(baseUrl))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(author.getId()))
+                .andExpect(jsonPath("$[0].firstName", is(author.getFirstName())))
+                .andExpect(jsonPath("$[0].secondName", is(author.getSecondName())))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        verify(authorServiceMock).getAllAuthor();
+    }
+
+    @Test
+    public void createAuthorTest() throws Exception {
+        Author newAuthor = new Author("2", "Лев", "Толстой");
+        String authorJson = new ObjectMapper().writeValueAsString(newAuthor);
+        mockMvc.perform(post(baseUrl).contentType(MediaType.APPLICATION_JSON).content(authorJson))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void editAuthorTest() throws Exception {
+        Author newAuthor = new Author("1", "Антон", "Чехов");
+        String authorJson = new ObjectMapper().writeValueAsString(newAuthor);
+        mockMvc.perform(put(baseUrl + "{id}", author.getId())
+                .contentType(MediaType.APPLICATION_JSON).content(authorJson))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteAuthorTest() throws Exception {
+        mockMvc.perform(delete(baseUrl + "{id}", author.getId()))
+                .andExpect(status().isNoContent());
     }
 }

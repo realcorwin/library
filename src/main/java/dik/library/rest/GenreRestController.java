@@ -30,7 +30,7 @@ public class GenreRestController {
         return genreService.getById(id);
     }
 
-    @PostMapping(value = "/rest/genre", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/rest/genre", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void add(@RequestBody Genre genre) {
         genreService.insert(genre.getGenreName());
     }

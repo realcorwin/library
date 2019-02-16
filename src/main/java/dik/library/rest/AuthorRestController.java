@@ -30,7 +30,7 @@ public class AuthorRestController {
         return authorService.getById(id);
     }
 
-    @PostMapping(value = "/rest/author", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/rest/author", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void add(@RequestBody Author author) {
         authorService.insert(author.getFirstName(), author.getSecondName());
     }
