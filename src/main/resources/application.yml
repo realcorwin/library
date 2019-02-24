@@ -8,3 +8,5 @@ spring:
   shell:
     interactive:
       enabled: false
+  main:
+    allow-bean-definition-overriding: true
