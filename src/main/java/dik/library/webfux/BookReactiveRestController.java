@@ -2,7 +2,6 @@ package dik.library.webfux;
 
 import dik.library.model.Book;
 import dik.library.reactiverepo.BookReactiveRepository;
-import dik.library.service.BookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @Api(value="Reactive REST API для работы с книгами", description = "Reactive REST API для работы с книгами")
