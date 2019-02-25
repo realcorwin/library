@@ -1,4 +1,4 @@
-package dik.library.testbook;
+package dik.library.reactiverepo;
 
 import dik.library.model.Author;
 import dik.library.model.Book;
@@ -18,17 +18,17 @@ import static dik.library.TestConstants.*;
 
 @RunWith(SpringRunner.class)
 @DataMongoTest
-public class BookTest {
+public class BookReactiveRepositoryTest {
 
 
     @Autowired
-    BookRepository bookRepository;
+    BookReactiveRepository bookReactiveRepository;
 
     @Autowired
-    AuthorRepository authorRepository;
+    AuthorReactiveRepository authorReactiveRepository;
 
     @Autowired
-    GenreRepository genreRepository;
+    GenreReactiveRepository genreReactiveRepository;
 
 
     private Author author;
@@ -37,15 +37,21 @@ public class BookTest {
 
     @Before
     public void init(){
-        author = authorRepository.save(new Author(FIRST_NAME, SECOND_NAME));
-        genre = genreRepository.save(new Genre(GENRE));
-        book = bookRepository.save(new Book(BOOK_NAME, BOOK_DESCRIPTION, author, genre));
+        author = authorReactiveRepository.save(new Author(FIRST_NAME, SECOND_NAME)).block();
+        genre = genreReactiveRepository.save(new Genre(GENRE)).block();
+        book = bookReactiveRepository.save(new Book(BOOK_NAME, BOOK_DESCRIPTION, author, genre)).block();
     }
 
     @Test
     public void testBookValues(){
         Assert.assertEquals(BOOK_NAME, book.getName());
         Assert.assertEquals(BOOK_DESCRIPTION, book.getDescription());
+    }
+
+    @Test
+    public void testFindById() {
+        final Book bookFromDb = bookReactiveRepository.findById(book.getId()).block();
+        Assert.assertEquals(book, bookFromDb);
     }
 
     @Test
@@ -60,12 +66,12 @@ public class BookTest {
 
     @Test
     public void testCount(){
-        Assert.assertTrue(bookRepository.count() > 0);
+        Assert.assertTrue(bookReactiveRepository.count().block().intValue() > 0);
     }
 
     @Test
     public void testDeleteAll(){
-        bookRepository.deleteAll();
-        Assert.assertEquals(0, bookRepository.count());
+        bookReactiveRepository.deleteAll().block();
+        Assert.assertEquals(0, bookReactiveRepository.count().block().intValue());
     }
 }
