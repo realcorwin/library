@@ -4,10 +4,6 @@ import dik.library.model.Author;
 import dik.library.model.Book;
 import dik.library.model.Comment;
 import dik.library.model.Genre;
-import dik.library.repository.AuthorRepository;
-import dik.library.repository.BookRepository;
-import dik.library.repository.CommentRepository;
-import dik.library.repository.GenreRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static dik.library.TestConstants.*;
 
@@ -56,6 +54,9 @@ public class CommentReactiveRepositoryTest {
     public void testFindById() {
         final Comment commentFromDb = commentReactiveRepository.findById(comment.getId()).block();
         Assert.assertEquals(comment, commentFromDb);
+
+        Mono<Comment> commentMono = commentReactiveRepository.findById(comment.getId());
+        StepVerifier.create(commentMono).expectNext(comment).verifyComplete();
     }
 
     @Test

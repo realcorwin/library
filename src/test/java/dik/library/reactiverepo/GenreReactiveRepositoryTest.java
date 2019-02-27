@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static dik.library.TestConstants.*;
 
@@ -34,6 +36,9 @@ public class GenreReactiveRepositoryTest {
     public void testFindById() {
         final Genre genreFromDb = genreReactiveRepository.findById(genre.getId()).block();
         Assert.assertEquals(genre, genreFromDb);
+
+        Mono<Genre> genreMono = genreReactiveRepository.findById(genre.getId());
+        StepVerifier.create(genreMono).expectNext(genre).verifyComplete();
     }
 
     @Test

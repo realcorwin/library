@@ -96,11 +96,11 @@ public class GenreReactiveRestControllerTest {
 
     @Test
     public void deleteGenreTest() throws Exception {
-        when(genreReactiveRepository.deleteById("1")).thenReturn(Mono.empty());
+        when(genreReactiveRepository.deleteByIdOnlyIfNotInBooks("1")).thenReturn(Mono.empty());
         webTestClient.delete().uri(baseUrl + "1")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isNoContent();
-        verify(genreReactiveRepository).deleteById("1");
+        verify(genreReactiveRepository).deleteByIdOnlyIfNotInBooks("1");
     }
 }

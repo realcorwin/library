@@ -20,7 +20,6 @@ public class BookReactiveRepositoryImpl implements BookReactiveRepositoryCustom 
 
     @Override
     public Mono<Void> deleteByIdWithComments(String id) {
-        commentRepository.deleteByBookId(id);
-        return bookRepository.deleteById(id).then();
+        return commentRepository.deleteByBookId(id).then(bookRepository.deleteById(id));
     }
 }

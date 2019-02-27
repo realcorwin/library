@@ -2,11 +2,11 @@ package dik.library.reactiverepo;
 
 import dik.library.model.Comment;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-
-import java.util.List;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface CommentReactiveRepository extends ReactiveMongoRepository<Comment, String> {
 
-    public List<Comment> findAllByBookId(String bookId);
-    public void deleteByBookId(String bookId);
+    Flux<Comment> findAllByBookId(String bookId);
+    Mono<Void> deleteByBookId(String bookId);
 }

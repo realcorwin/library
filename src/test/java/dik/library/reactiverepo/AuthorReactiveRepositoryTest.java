@@ -1,7 +1,6 @@
 package dik.library.reactiverepo;
 
 import dik.library.model.Author;
-import dik.library.repository.AuthorRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,8 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Optional;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static dik.library.TestConstants.FIRST_NAME;
 import static dik.library.TestConstants.SECOND_NAME;
@@ -39,6 +38,9 @@ public class AuthorReactiveRepositoryTest {
     public void testFindById() {
         final Author authorFromDb = authorReactiveRepository.findById(author.getId()).block();
         Assert.assertEquals(author, authorFromDb);
+
+        Mono<Author> authorMono = authorReactiveRepository.findById(author.getId());
+        StepVerifier.create(authorMono).expectNext(author).verifyComplete();
     }
 
     @Test

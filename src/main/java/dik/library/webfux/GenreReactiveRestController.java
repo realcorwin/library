@@ -44,7 +44,7 @@ public class GenreReactiveRestController {
     @DeleteMapping(value = "/reactive/genre/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> delete(@PathVariable("id") String id) {
-        return genreReactiveRepository.deleteById(id).then();
+        return genreReactiveRepository.deleteByIdOnlyIfNotInBooks(id).then();
     }
 
     @ApiOperation(value = "Изменить жанр")

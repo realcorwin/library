@@ -100,11 +100,11 @@ public class AuthorReactiveRestControllerTest {
 
     @Test
     public void deleteAuthorTest() throws Exception {
-        when(authorReactiveRepository.deleteById("1")).thenReturn(Mono.empty());
+        when(authorReactiveRepository.deleteByIdOnlyIfNotInBooks("1")).thenReturn(Mono.empty());
         webTestClient.delete().uri(baseUrl + "1")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isNoContent();
-        verify(authorReactiveRepository).deleteById("1");
+        verify(authorReactiveRepository).deleteByIdOnlyIfNotInBooks("1");
     }
 }

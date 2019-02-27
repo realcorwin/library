@@ -44,7 +44,7 @@ public class AuthorReactiveRestController {
     @DeleteMapping(value = "/reactive/author/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> delete(@PathVariable("id") String id) {
-        return authorReactiveRepository.deleteById(id).then();
+        return authorReactiveRepository.deleteByIdOnlyIfNotInBooks(id).then();
     }
 
     @ApiOperation(value = "Изменить автора")

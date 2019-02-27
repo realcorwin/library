@@ -2,10 +2,11 @@ package dik.library.reactiverepo;
 
 import dik.library.model.Book;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import reactor.core.publisher.Mono;
 
 public interface BookReactiveRepository extends ReactiveMongoRepository<Book, String>, BookReactiveRepositoryCustom {
 
-    public Book findFirstByAuthorId(String authorId);
+    Mono<Book> findFirstByAuthorId(String authorId);
 
-    public Book findFirstByGenreId(String genreId);
+    Mono<Book> findFirstByGenreId(String genreId);
 }

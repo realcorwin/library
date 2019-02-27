@@ -3,9 +3,6 @@ package dik.library.reactiverepo;
 import dik.library.model.Author;
 import dik.library.model.Book;
 import dik.library.model.Genre;
-import dik.library.repository.AuthorRepository;
-import dik.library.repository.BookRepository;
-import dik.library.repository.GenreRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static dik.library.TestConstants.*;
 
@@ -52,6 +51,9 @@ public class BookReactiveRepositoryTest {
     public void testFindById() {
         final Book bookFromDb = bookReactiveRepository.findById(book.getId()).block();
         Assert.assertEquals(book, bookFromDb);
+
+        Mono<Book> bookMono = bookReactiveRepository.findById(book.getId());
+        StepVerifier.create(bookMono).expectNext(book).verifyComplete();
     }
 
     @Test
