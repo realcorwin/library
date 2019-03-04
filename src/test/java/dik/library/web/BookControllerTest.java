@@ -2,6 +2,7 @@ package dik.library.web;
 
 import dik.library.controller.BookController;
 import dik.library.model.Book;
+import dik.library.security.UserService;
 import dik.library.service.AuthorService;
 import dik.library.service.BookService;
 import dik.library.service.GenreService;
@@ -34,6 +35,9 @@ public class BookControllerTest {
 
     @MockBean
     private GenreService genreServiceMock;
+
+    @MockBean
+    private UserService userService;
 
     @Test
     public void createBookTest() throws Exception {

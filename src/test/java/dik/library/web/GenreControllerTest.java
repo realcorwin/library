@@ -2,6 +2,7 @@ package dik.library.web;
 
 import dik.library.controller.GenreController;
 import dik.library.model.Genre;
+import dik.library.security.UserService;
 import dik.library.service.GenreService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,9 @@ public class GenreControllerTest {
 
     @MockBean
     private GenreService genreServiceMock;
+
+    @MockBean
+    private UserService userService;
 
     @Test
     public void createGenreTest() throws Exception {

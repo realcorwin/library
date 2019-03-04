@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dik.library.model.Author;
 import dik.library.model.Book;
 import dik.library.model.Genre;
+import dik.library.security.UserService;
 import dik.library.service.AuthorService;
 import dik.library.service.BookService;
 import dik.library.service.GenreService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(BookRestController.class)
+@WithMockUser(username = "user")
 public class BookRestControllerTest {
 
     @Autowired
@@ -41,6 +44,9 @@ public class BookRestControllerTest {
 
     @MockBean
     private BookService bookServiceMock;
+
+    @MockBean
+    private UserService userService;
 
     private final String baseUrl = "/rest/book/";
     private Author author;

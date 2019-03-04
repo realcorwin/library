@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -33,12 +34,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.is;
 
+
 @RunWith(SpringRunner.class)
-@WebMvcTest({AuthorRestController.class, UserService.class, UserRepository.class})
-@WithUserDetails
-@ContextConfiguration
-//@WithMockUser
-//@Import({UserService.class, UserRepository.class})
+@WebMvcTest(AuthorRestController.class)
+@WithMockUser(username = "user")
 public class AuthorRestControllerTest {
 
     @Autowired
@@ -50,6 +49,9 @@ public class AuthorRestControllerTest {
     @MockBean
     private AuthorService authorServiceMock;
 
+    @MockBean
+    private UserService userService;
+
     private final String baseUrl = "/rest/author/";
     private Author author;
     private List<Author> authors;
@@ -59,14 +61,8 @@ public class AuthorRestControllerTest {
         author = new Author("Александр", "Пушкин");
         author.setId("1");
         authors = Collections.singletonList(author);
-
-        /*mockMvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();*/
     }
 
-    @WithMockUser(username = "user")
     @Test
     public void authorTest() throws Exception {
         when(authorServiceMock.getById("1")).thenReturn(author);
@@ -79,7 +75,6 @@ public class AuthorRestControllerTest {
         verify(authorServiceMock).getById("1");
     }
 
-    @WithMockUser(username = "user")
     @Test
     public void authorsTest() throws Exception {
         when(authorServiceMock.getAllAuthor()).thenReturn(authors);
@@ -93,7 +88,6 @@ public class AuthorRestControllerTest {
         verify(authorServiceMock).getAllAuthor();
     }
 
-    @WithMockUser(username = "user")
     @Test
     public void createAuthorTest() throws Exception {
         Author newAuthor = new Author("2", "Лев", "Толстой");
@@ -102,7 +96,6 @@ public class AuthorRestControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @WithMockUser(username = "user")
     @Test
     public void editAuthorTest() throws Exception {
         Author newAuthor = new Author("1", "Антон", "Чехов");
@@ -112,7 +105,6 @@ public class AuthorRestControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @WithMockUser(username = "user")
     @Test
     public void deleteAuthorTest() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", author.getId()))

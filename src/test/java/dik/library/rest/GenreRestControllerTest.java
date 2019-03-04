@@ -2,6 +2,7 @@ package dik.library.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dik.library.model.Genre;
+import dik.library.security.UserService;
 import dik.library.service.GenreService;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -25,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(GenreRestController.class)
+@WithMockUser(username = "user")
 public class GenreRestControllerTest {
 
     @Autowired
@@ -32,6 +35,9 @@ public class GenreRestControllerTest {
 
     @MockBean
     private GenreService genreServiceMock;
+
+    @MockBean
+    private UserService userService;
 
     private final String baseUrl = "/rest/genre/";
     private Genre genre;
