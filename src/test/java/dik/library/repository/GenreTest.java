@@ -1,4 +1,4 @@
-package dik.library.testgenre;
+package dik.library.repository;
 
 import dik.library.model.Genre;
 import dik.library.repository.GenreRepository;

@@ -1,4 +1,4 @@
-package dik.library.testauthor;
+package dik.library.repository;
 
 import dik.library.model.Author;
 import dik.library.repository.AuthorRepository;

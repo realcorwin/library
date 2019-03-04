@@ -3,10 +3,7 @@ package dik.library.mongobee.changelog;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import com.mongodb.DB;
-import dik.library.model.Author;
-import dik.library.model.Book;
-import dik.library.model.Comment;
-import dik.library.model.Genre;
+import dik.library.model.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 @ChangeLog
@@ -23,6 +20,7 @@ public class DatabaseChangelog {
         Author author = null;
         Genre genre = null;
         Comment comment = null;
+        User user = null;
 
         for(int bookCount = 0; bookCount < 5; bookCount++) {
             book = new Book();
@@ -48,5 +46,8 @@ public class DatabaseChangelog {
                 comment = mongoTemplate.save(comment, "comment");
             }
         }
+
+        user = new User("user", "password");
+        user = mongoTemplate.save(user, "user");
     }
 }
