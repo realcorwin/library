@@ -28,14 +28,15 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-                .useDefaultResponseMessages(false)
+                /*.useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET, newArrayList(new ResponseMessageBuilder().code(500)
                                 .message("500 message")
                                 .responseModel(new ModelRef("Error"))
                                 .build(),
                         new ResponseMessageBuilder().code(403)
                                 .message("Forbidden!!!!!")
-                                .build()));
+                                .build()))*/
+                ;
     }
 
     private ApiInfo apiInfo() {
