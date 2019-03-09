@@ -35,6 +35,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/**", "/swagger-ui.html").authenticated()
                 .and()
                 .formLogin()
+                .loginProcessingUrl("/login/process")// default is /login --> можно не менять
+                .usernameParameter("libraryUsername") // default is username
+                .passwordParameter("libraryPassword") // default is password
                 .defaultSuccessUrl("/swagger-ui.html")
                 .and()
                 .rememberMe().key("someSecret")

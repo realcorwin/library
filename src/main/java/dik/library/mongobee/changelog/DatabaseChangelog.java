@@ -20,7 +20,6 @@ public class DatabaseChangelog {
         Author author = null;
         Genre genre = null;
         Comment comment = null;
-        User user = null;
 
         for(int bookCount = 0; bookCount < 5; bookCount++) {
             book = new Book();
@@ -46,6 +45,12 @@ public class DatabaseChangelog {
                 comment = mongoTemplate.save(comment, "comment");
             }
         }
+    }
+
+    @ChangeSet(order = "002", id = "addUser", author = "realcorwin")
+    public void addUser(MongoTemplate mongoTemplate) {
+
+        User user = null;
 
         user = new User("user", "password");
         user = mongoTemplate.save(user, "user");
