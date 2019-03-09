@@ -24,7 +24,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .paths(regex("^(?!/error).*$"))
                 .build()
-                .apiInfo(apiInfo());
+                .apiInfo(apiInfo())
+                ;
     }
 
     private ApiInfo apiInfo() {

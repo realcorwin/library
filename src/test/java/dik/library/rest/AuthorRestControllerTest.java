@@ -2,6 +2,7 @@ package dik.library.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dik.library.model.Author;
+import dik.library.security.UserService;
 import dik.library.service.AuthorService;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,15 +26,23 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.is;
 
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthorRestController.class)
+@WithMockUser(username = "user")
 public class AuthorRestControllerTest {
+
+    @Autowired
+    private WebApplicationContext context;
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private AuthorService authorServiceMock;
+
+    @MockBean
+    private UserService userService;
 
     private final String baseUrl = "/rest/author/";
     private Author author;

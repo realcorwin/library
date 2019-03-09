@@ -2,6 +2,7 @@ package dik.library.web;
 
 import dik.library.controller.AuthorController;
 import dik.library.model.Author;
+import dik.library.security.UserService;
 import dik.library.service.AuthorService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,9 @@ public class AuthorControllerTest {
 
     @MockBean
     private AuthorService authorServiceMock;
+
+    @MockBean
+    private UserService userService;
 
     @Test
     public void createAuthorTest() throws Exception {
