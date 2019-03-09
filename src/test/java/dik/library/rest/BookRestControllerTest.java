@@ -37,12 +37,6 @@ public class BookRestControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private AuthorService authorServiceMock;
-
-    @MockBean
-    private GenreService genreServiceMock;
-
-    @MockBean
     private BookService bookServiceMock;
 
     @MockBean
