@@ -117,8 +117,14 @@ public class BookRestControllerTest {
     }
 
     @Test
+    public void deleteBookTestWithoutAccess() throws Exception {
+        mockMvc.perform(delete(baseUrl + "{id}", book.getId()))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     @WithMockUser(roles = "ADMIN")
-    public void deleteBookTest() throws Exception {
+    public void deleteBookTestWithAccess() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", book.getId()))
                 .andExpect(status().isNoContent());
     }

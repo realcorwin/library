@@ -98,8 +98,14 @@ public class AuthorRestControllerTest {
     }
 
     @Test
+    public void deleteAuthorTestWithoutAccess() throws Exception {
+        mockMvc.perform(delete(baseUrl + "{id}", author.getId()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @WithMockUser(roles = "ADMIN")
-    public void deleteAuthorTest() throws Exception {
+    public void deleteAuthorTestWithAccess() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", author.getId()))
                 .andExpect(status().isNoContent());
     }

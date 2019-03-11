@@ -91,6 +91,12 @@ public class GenreRestControllerTest {
     }
 
     @Test
+    public void deleteGenreTestWithoutAccess() throws Exception {
+        mockMvc.perform(delete(baseUrl + "{id}", genre.getId()))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @WithMockUser(roles = "ADMIN")
     public void deleteGenreTest() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", genre.getId()))
