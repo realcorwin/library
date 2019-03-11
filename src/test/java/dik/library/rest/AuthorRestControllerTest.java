@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AuthorRestController.class)
-@WithMockUser(username = "user")
+@WithMockUser(roles = "USER")
 public class AuthorRestControllerTest {
 
     @Autowired
@@ -98,6 +98,7 @@ public class AuthorRestControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void deleteAuthorTest() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", author.getId()))
                 .andExpect(status().isNoContent());

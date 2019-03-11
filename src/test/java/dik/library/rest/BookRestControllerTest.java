@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(BookRestController.class)
-@WithMockUser(username = "user")
+@WithMockUser(roles = "USER")
 public class BookRestControllerTest {
 
     @Autowired
@@ -117,6 +117,7 @@ public class BookRestControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void deleteBookTest() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", book.getId()))
                 .andExpect(status().isNoContent());

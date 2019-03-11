@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(GenreRestController.class)
-@WithMockUser(username = "user")
+@WithMockUser(roles = "USER")
 public class GenreRestControllerTest {
 
     @Autowired
@@ -91,6 +91,7 @@ public class GenreRestControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void deleteGenreTest() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", genre.getId()))
                 .andExpect(status().isNoContent());

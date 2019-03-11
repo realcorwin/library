@@ -52,7 +52,10 @@ public class DatabaseChangelog {
 
         User user = null;
 
-        user = new User("user", "password");
+        user = new User("user", "password", "USER");
+        user = mongoTemplate.save(user, "user");
+
+        user = new User("admin", "password", "ADMIN");
         user = mongoTemplate.save(user, "user");
     }
 }
