@@ -16,6 +16,8 @@ public class User {
 
     private String password;
 
+    private String role;
+
     public User() {
     }
 
@@ -24,10 +26,16 @@ public class User {
         this.password = password;
     }
 
-    public User(String id, String name, String password) {
+    public User(String name, String password, String role) {
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(String id, String name, String password, String role) {
         this.id = id;
         this.name = name;
         this.password = password;
+        this.role = role;
     }
-
 }

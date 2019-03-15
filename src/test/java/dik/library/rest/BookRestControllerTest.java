@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(BookRestController.class)
-@WithMockUser(username = "user")
+@WithMockUser(roles = "USER")
 public class BookRestControllerTest {
 
     @Autowired
@@ -111,7 +111,14 @@ public class BookRestControllerTest {
     }
 
     @Test
-    public void deleteBookTest() throws Exception {
+    public void deleteBookTestWithoutAccess() throws Exception {
+        mockMvc.perform(delete(baseUrl + "{id}", book.getId()))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void deleteBookTestWithAccess() throws Exception {
         mockMvc.perform(delete(baseUrl + "{id}", book.getId()))
                 .andExpect(status().isNoContent());
     }

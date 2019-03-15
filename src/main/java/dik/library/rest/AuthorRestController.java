@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +44,7 @@ public class AuthorRestController {
     }
 
     @ApiOperation(value = "Удалить автора")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/rest/author/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") String id) {
@@ -53,6 +56,11 @@ public class AuthorRestController {
     public void update(@RequestBody Author author, @PathVariable("id") String id) {
         author.setId(id);
         authorService.update(author);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.badRequest().body("В доступе отказано");
     }
 
     @ExceptionHandler(RuntimeException.class)
