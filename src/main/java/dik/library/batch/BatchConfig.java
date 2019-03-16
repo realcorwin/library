@@ -3,6 +3,8 @@ package dik.library.batch;
 import dik.library.entity.Author;
 import dik.library.entity.Genre;
 import dik.library.model.Book;
+import dik.library.repository.AuthorRepository;
+import dik.library.repository.GenreRepository;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -37,6 +39,12 @@ public class BatchConfig {
     @Autowired
     MongoOperations mongoOperations;
 
+    @Autowired
+    AuthorRepository authorRepositoryH2;
+
+    @Autowired
+    GenreRepository genreRepositoryH2;
+
     @Bean
     public MongoItemReader<Book> reader() {
         MongoItemReader<Book> mongoItemReader = new MongoItemReader<>();
@@ -65,9 +73,11 @@ public class BatchConfig {
             authorH2.setFirstName(book.getAuthor().getFirstName());
             authorH2.setSecondName(book.getAuthor().getSecondName());
             bookH2.setAuthor(authorH2);
+            authorRepositoryH2.save(authorH2);
             Genre genreH2 = new Genre();
             genreH2.setGenreName(book.getGenre().getGenreName());
             bookH2.setGenre(genreH2);
+            genreRepositoryH2.save(genreH2);
             return bookH2;
         };
     }
