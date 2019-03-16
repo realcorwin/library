@@ -1,6 +1,6 @@
 package dik.library.service;
 
-import dik.library.model.Comment;
+import dik.library.entity.Comment;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package dik.library.shell;
 
-import dik.library.model.Book;
+import dik.library.entity.Book;
 import dik.library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;

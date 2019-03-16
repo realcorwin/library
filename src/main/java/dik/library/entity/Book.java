@@ -1,23 +1,25 @@
-package dik.library.model;
+package dik.library.entity;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Data
-@Document
+@Entity
 public class Book {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
     private String description;
 
-    @DBRef
+    @OneToOne(targetEntity = Author.class)
+    @JoinColumn(name = "id_author")
     private Author author;
 
-    @DBRef
+    @OneToOne(targetEntity = Genre.class)
+    @JoinColumn(name = "id_genre")
     private Genre genre;
 
     public Book() {
@@ -30,7 +32,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public Book(String id, String name, String description, Author author, Genre genre) {
+    public Book(long id, String name, String description, Author author, Genre genre) {
         this.id = id;
         this.name = name;
         this.description = description;

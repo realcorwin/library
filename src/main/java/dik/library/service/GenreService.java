@@ -1,6 +1,6 @@
 package dik.library.service;
 
-import dik.library.model.Genre;
+import dik.library.entity.Genre;
 
 import java.util.List;
 

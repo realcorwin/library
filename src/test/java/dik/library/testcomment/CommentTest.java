@@ -1,7 +1,7 @@
 package dik.library.testcomment;
 
-import dik.library.model.Book;
-import dik.library.model.Comment;
+import dik.library.entity.Book;
+import dik.library.entity.Comment;
 import dik.library.repository.BookRepository;
 import dik.library.repository.CommentRepository;
 import org.junit.Assert;

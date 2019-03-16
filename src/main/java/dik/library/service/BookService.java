@@ -1,6 +1,6 @@
 package dik.library.service;
 
-import dik.library.model.Book;
+import dik.library.entity.Book;
 
 import java.util.List;
 

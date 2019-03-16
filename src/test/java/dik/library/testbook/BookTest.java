@@ -1,8 +1,8 @@
 package dik.library.testbook;
 
-import dik.library.model.Author;
-import dik.library.model.Book;
-import dik.library.model.Genre;
+import dik.library.entity.Author;
+import dik.library.entity.Book;
+import dik.library.entity.Genre;
 import dik.library.repository.AuthorRepository;
 import dik.library.repository.BookRepository;
 import dik.library.repository.GenreRepository;

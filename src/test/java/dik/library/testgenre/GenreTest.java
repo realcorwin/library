@@ -1,6 +1,6 @@
 package dik.library.testgenre;
 
-import dik.library.model.Genre;
+import dik.library.entity.Genre;
 import dik.library.repository.GenreRepository;
 import org.junit.Assert;
 import org.junit.Test;

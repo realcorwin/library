@@ -1,23 +1,24 @@
-package dik.library.model;
+package dik.library.entity;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.*;
 
+import javax.persistence.*;
 
 @Data
-@Document
+@Entity
 public class Genre {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
+    @Column(name="genrename")
     private String genreName;
 
     public Genre() {
     }
 
-    public Genre(String id, String genreName) {
+    public Genre(long id, String genreName) {
         this.id = id;
         this.genreName = genreName;
     }

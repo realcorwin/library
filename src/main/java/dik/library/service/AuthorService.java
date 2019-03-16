@@ -1,6 +1,6 @@
 package dik.library.service;
 
-import dik.library.model.Author;
+import dik.library.entity.Author;
 
 import java.util.List;
 

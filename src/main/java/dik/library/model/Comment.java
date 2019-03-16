@@ -1,23 +1,20 @@
 package dik.library.model;
 
-import lombok.*;
-
-import javax.persistence.*;
-import java.util.Objects;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
+@Document
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column
     private String comment;
 
-    @ManyToOne(targetEntity = Book.class)
-    @JoinColumn(name = "id_book")
+    @DBRef
     private Book book;
 
     public Comment() {

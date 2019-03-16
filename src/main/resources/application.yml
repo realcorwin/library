@@ -6,3 +6,12 @@ spring:
   h2:
     console:
       enabled: true
+  data:
+    mongodb:
+      authentication-database: none
+      database: library
+      port: 27017
+      host: localhost
+  shell:
+    interactive:
+      enabled: false

@@ -1,6 +1,6 @@
 package dik.library.testauthor;
 
-import dik.library.model.Author;
+import dik.library.entity.Author;
 import dik.library.repository.AuthorRepository;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.sql.DataSource;
 import java.util.List;
 import java.util.Objects;
 

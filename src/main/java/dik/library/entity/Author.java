@@ -1,19 +1,20 @@
-package dik.library.model;
+package dik.library.entity;
 
-import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
 
-
-@Data
-@Document
+@lombok.Data
+@Entity
 public class Author {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private long id;
 
+    @Column(name="firstname")
     private String firstName;
 
+    @Column(name="secondname")
     private String secondName;
 
     public Author() {
@@ -24,7 +25,7 @@ public class Author {
         this.secondName = secondName;
     }
 
-    public Author(String id, String firstName, String secondName) {
+    public Author(long id, String firstName, String secondName) {
         this.id = id;
         this.firstName = firstName;
         this.secondName = secondName;

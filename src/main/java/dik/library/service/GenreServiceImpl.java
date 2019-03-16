@@ -1,6 +1,6 @@
 package dik.library.service;
 
-import dik.library.model.Genre;
+import dik.library.entity.Genre;
 import dik.library.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
