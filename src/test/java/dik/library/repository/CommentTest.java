@@ -1,7 +1,9 @@
-package dik.library.testauthor;
+package dik.library.repository;
 
-import dik.library.entity.Author;
-import dik.library.repository.AuthorRepository;
+import dik.library.entity.Book;
+import dik.library.entity.Comment;
+import dik.library.repository.BookRepository;
+import dik.library.repository.CommentRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,45 +19,51 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
-public class AuthorTest {
+public class CommentTest {
 
     @Autowired
-    AuthorRepository authorRepository;
+    BookRepository bookRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     @Test
     public void count() {
-        Assert.assertEquals(2, authorRepository.count());
+        Assert.assertEquals(3, commentRepository.count());
     }
 
     @Test
     public void getByID() {
-        Assert.assertEquals("firstname101", Objects.requireNonNull(authorRepository.findById(101L).orElse(null)).getFirstName());
+        Assert.assertEquals("Cool", Objects.requireNonNull(commentRepository.findById(501L).orElse(null)).getComment());
     }
 
     @Test
     public void getAll() {
-        List<Author> authors = authorRepository.findAll();
-        Assert.assertEquals("firstname99", authors.get(0).getFirstName());
+        List<Comment> comments = commentRepository.findAll();
+        Assert.assertEquals("Cool", comments.get(0).getComment());
     }
 
     @Test
     public void insert() {
-        Author author = new Author(102, "firstname102", "secondname102");
-        authorRepository.save(author);
-        Assert.assertEquals(3, authorRepository.count());
-        Assert.assertEquals(102, author.getId());
+        Book book = bookRepository.findById(1003L).orElse(null);
+        commentRepository.save(new Comment("Brilliant", book));
+        Assert.assertEquals(4, commentRepository.count());
     }
 
     @Test
     public void deleteById() {
-        authorRepository.deleteById(99L);
-        Assert.assertEquals(1, authorRepository.count());
+        commentRepository.deleteById(503L);
+        Assert.assertEquals(2, commentRepository.count());
+    }
+
+    @Test
+    public void cascadeOnDeleteBook() {
+        bookRepository.deleteById(1003L);
+        Assert.assertEquals(2, commentRepository.count());
     }
 }

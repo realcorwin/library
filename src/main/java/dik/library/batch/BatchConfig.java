@@ -69,20 +69,30 @@ public class BatchConfig {
             dik.library.entity.Book bookH2 = new dik.library.entity.Book();
             bookH2.setName(book.getName());
             bookH2.setDescription(book.getDescription());
-            Author authorH2 = new Author();
-            authorH2.setFirstName(book.getAuthor().getFirstName());
-            authorH2.setSecondName(book.getAuthor().getSecondName());
+            Author authorH2;
+            if (authorRepositoryH2.findFirstByFirstNameAndSecondName(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()) != null)
+                authorH2 = authorRepositoryH2.findFirstByFirstNameAndSecondName(book.getAuthor().getFirstName(), book.getAuthor().getSecondName());
+            else {
+                authorH2 = new Author();
+                authorH2.setFirstName(book.getAuthor().getFirstName());
+                authorH2.setSecondName(book.getAuthor().getSecondName());
+            }
             bookH2.setAuthor(authorH2);
             authorRepositoryH2.save(authorH2);
-            Genre genreH2 = new Genre();
-            genreH2.setGenreName(book.getGenre().getGenreName());
+            Genre genreH2;
+            if (genreRepositoryH2.findFirstByGenreName(book.getGenre().getGenreName()) != null)
+                genreH2 = genreRepositoryH2.findFirstByGenreName(book.getGenre().getGenreName());
+            else {
+                genreH2 = new Genre();
+                genreH2.setGenreName(book.getGenre().getGenreName());
+            }
             bookH2.setGenre(genreH2);
             genreRepositoryH2.save(genreH2);
             return bookH2;
         };
     }
 
-    @Bean
+    @Bean   
     public MongoItemReader<dik.library.model.Author> authorReader() {
         MongoItemReader<dik.library.model.Author> authorMongoItemReader = new MongoItemReader<>();
         authorMongoItemReader.setName("authorReader");
@@ -150,6 +160,7 @@ public class BatchConfig {
                     public void beforeJob(JobExecution jobExecution) {
                         System.out.println("Начало job");
                     }
+
                     @Override
                     public void afterJob(JobExecution jobExecution) {
                         System.out.println("Конец job");
@@ -166,24 +177,56 @@ public class BatchConfig {
                 .processor(authorProcessor())
                 .writer(authorWriter())
                 .listener(new ItemReadListener() {
-                    public void beforeRead() { System.out.println("Начало чтения"); }
-                    public void afterRead(Object o) { System.out.println("Конец чтения"); }
-                    public void onReadError(Exception e) { System.out.println("Ошибка чтения"); }
+                    public void beforeRead() {
+                        System.out.println("Начало чтения");
+                    }
+
+                    public void afterRead(Object o) {
+                        System.out.println("Конец чтения");
+                    }
+
+                    public void onReadError(Exception e) {
+                        System.out.println("Ошибка чтения");
+                    }
                 })
                 .listener(new ItemWriteListener() {
-                    public void beforeWrite(List list) { System.out.println("Начало записи"); }
-                    public void afterWrite(List list) { System.out.println("Конец записи"); }
-                    public void onWriteError(Exception e, List list) { System.out.println("Ошибка записи"); }
+                    public void beforeWrite(List list) {
+                        System.out.println("Начало записи");
+                    }
+
+                    public void afterWrite(List list) {
+                        System.out.println("Конец записи");
+                    }
+
+                    public void onWriteError(Exception e, List list) {
+                        System.out.println("Ошибка записи");
+                    }
                 })
                 .listener(new ItemProcessListener() {
-                    public void beforeProcess(Object o) {System.out.println("Начало обработки");}
-                    public void afterProcess(Object o, Object o2) {System.out.println("Конец обработки");}
-                    public void onProcessError(Object o, Exception e) {System.out.println("Ошибка обработки");}
+                    public void beforeProcess(Object o) {
+                        System.out.println("Начало обработки");
+                    }
+
+                    public void afterProcess(Object o, Object o2) {
+                        System.out.println("Конец обработки");
+                    }
+
+                    public void onProcessError(Object o, Exception e) {
+                        System.out.println("Ошибка обработки");
+                    }
                 })
                 .listener(new ChunkListener() {
-                    public void beforeChunk(ChunkContext chunkContext) {System.out.println("Начало пачки");}
-                    public void afterChunk(ChunkContext chunkContext) {System.out.println("Конец пачки");}
-                    public void afterChunkError(ChunkContext chunkContext) {System.out.println("Ошибка пачки");}
+                    public void beforeChunk(ChunkContext chunkContext) {
+                        System.out.println("Начало пачки");
+                    }
+
+                    public void afterChunk(ChunkContext chunkContext) {
+                        System.out.println("Конец пачки");
+                    }
+
+                    public void afterChunkError(ChunkContext chunkContext) {
+                        System.out.println("Ошибка пачки");
+                    }
                 })
                 .build();
     }
@@ -196,24 +239,56 @@ public class BatchConfig {
                 .processor(genreProcessor())
                 .writer(genreWriter())
                 .listener(new ItemReadListener() {
-                    public void beforeRead() { System.out.println("Начало чтения"); }
-                    public void afterRead(Object o) { System.out.println("Конец чтения"); }
-                    public void onReadError(Exception e) { System.out.println("Ошибка чтения"); }
+                    public void beforeRead() {
+                        System.out.println("Начало чтения");
+                    }
+
+                    public void afterRead(Object o) {
+                        System.out.println("Конец чтения");
+                    }
+
+                    public void onReadError(Exception e) {
+                        System.out.println("Ошибка чтения");
+                    }
                 })
                 .listener(new ItemWriteListener() {
-                    public void beforeWrite(List list) { System.out.println("Начало записи"); }
-                    public void afterWrite(List list) { System.out.println("Конец записи"); }
-                    public void onWriteError(Exception e, List list) { System.out.println("Ошибка записи"); }
+                    public void beforeWrite(List list) {
+                        System.out.println("Начало записи");
+                    }
+
+                    public void afterWrite(List list) {
+                        System.out.println("Конец записи");
+                    }
+
+                    public void onWriteError(Exception e, List list) {
+                        System.out.println("Ошибка записи");
+                    }
                 })
                 .listener(new ItemProcessListener() {
-                    public void beforeProcess(Object o) {System.out.println("Начало обработки");}
-                    public void afterProcess(Object o, Object o2) {System.out.println("Конец обработки");}
-                    public void onProcessError(Object o, Exception e) {System.out.println("Ошибка обработки");}
+                    public void beforeProcess(Object o) {
+                        System.out.println("Начало обработки");
+                    }
+
+                    public void afterProcess(Object o, Object o2) {
+                        System.out.println("Конец обработки");
+                    }
+
+                    public void onProcessError(Object o, Exception e) {
+                        System.out.println("Ошибка обработки");
+                    }
                 })
                 .listener(new ChunkListener() {
-                    public void beforeChunk(ChunkContext chunkContext) {System.out.println("Начало пачки");}
-                    public void afterChunk(ChunkContext chunkContext) {System.out.println("Конец пачки");}
-                    public void afterChunkError(ChunkContext chunkContext) {System.out.println("Ошибка пачки");}
+                    public void beforeChunk(ChunkContext chunkContext) {
+                        System.out.println("Начало пачки");
+                    }
+
+                    public void afterChunk(ChunkContext chunkContext) {
+                        System.out.println("Конец пачки");
+                    }
+
+                    public void afterChunkError(ChunkContext chunkContext) {
+                        System.out.println("Ошибка пачки");
+                    }
                 })
                 .build();
     }
@@ -226,24 +301,56 @@ public class BatchConfig {
                 .processor(bookProcessor())
                 .writer(bookWriter())
                 .listener(new ItemReadListener() {
-                    public void beforeRead() { System.out.println("Начало чтения"); }
-                    public void afterRead(Object o) { System.out.println("Конец чтения"); }
-                    public void onReadError(Exception e) { System.out.println("Ошибка чтения"); }
+                    public void beforeRead() {
+                        System.out.println("Начало чтения");
+                    }
+
+                    public void afterRead(Object o) {
+                        System.out.println("Конец чтения");
+                    }
+
+                    public void onReadError(Exception e) {
+                        System.out.println("Ошибка чтения");
+                    }
                 })
                 .listener(new ItemWriteListener() {
-                    public void beforeWrite(List list) { System.out.println("Начало записи"); }
-                    public void afterWrite(List list) { System.out.println("Конец записи"); }
-                    public void onWriteError(Exception e, List list) { System.out.println("Ошибка записи"); }
+                    public void beforeWrite(List list) {
+                        System.out.println("Начало записи");
+                    }
+
+                    public void afterWrite(List list) {
+                        System.out.println("Конец записи");
+                    }
+
+                    public void onWriteError(Exception e, List list) {
+                        System.out.println("Ошибка записи");
+                    }
                 })
                 .listener(new ItemProcessListener() {
-                    public void beforeProcess(Object o) {System.out.println("Начало обработки");}
-                    public void afterProcess(Object o, Object o2) {System.out.println("Конец обработки");}
-                    public void onProcessError(Object o, Exception e) {System.out.println("Ошибка обработки");}
+                    public void beforeProcess(Object o) {
+                        System.out.println("Начало обработки");
+                    }
+
+                    public void afterProcess(Object o, Object o2) {
+                        System.out.println("Конец обработки");
+                    }
+
+                    public void onProcessError(Object o, Exception e) {
+                        System.out.println("Ошибка обработки");
+                    }
                 })
                 .listener(new ChunkListener() {
-                    public void beforeChunk(ChunkContext chunkContext) {System.out.println("Начало пачки");}
-                    public void afterChunk(ChunkContext chunkContext) {System.out.println("Конец пачки");}
-                    public void afterChunkError(ChunkContext chunkContext) {System.out.println("Ошибка пачки");}
+                    public void beforeChunk(ChunkContext chunkContext) {
+                        System.out.println("Начало пачки");
+                    }
+
+                    public void afterChunk(ChunkContext chunkContext) {
+                        System.out.println("Конец пачки");
+                    }
+
+                    public void afterChunkError(ChunkContext chunkContext) {
+                        System.out.println("Ошибка пачки");
+                    }
                 })
                 .build();
     }

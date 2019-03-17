@@ -1,9 +1,7 @@
-package dik.library.testcomment;
+package dik.library.repository;
 
-import dik.library.entity.Book;
-import dik.library.entity.Comment;
-import dik.library.repository.BookRepository;
-import dik.library.repository.CommentRepository;
+import dik.library.entity.Genre;
+import dik.library.repository.GenreRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,46 +22,38 @@ import java.util.Objects;
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
-public class CommentTest {
+public class GenreTest {
 
     @Autowired
-    BookRepository bookRepository;
-
-    @Autowired
-    CommentRepository commentRepository;
+    GenreRepository genreRepository;
 
     @Test
     public void count() {
-        Assert.assertEquals(3, commentRepository.count());
+        Assert.assertEquals(2, genreRepository.count());
     }
 
     @Test
     public void getByID() {
-        Assert.assertEquals("Cool", Objects.requireNonNull(commentRepository.findById(501L).orElse(null)).getComment());
+        Assert.assertEquals("genrename22", Objects.requireNonNull(genreRepository.findById(22L).orElse(null)).getGenreName());
     }
 
     @Test
     public void getAll() {
-        List<Comment> comments = commentRepository.findAll();
-        Assert.assertEquals("Cool", comments.get(0).getComment());
+        List<Genre> genres = genreRepository.findAll();
+        Assert.assertEquals("genrename22", genres.get(0).getGenreName());
     }
 
     @Test
     public void insert() {
-        Book book = bookRepository.findById(1003L).orElse(null);
-        commentRepository.save(new Comment("Brilliant", book));
-        Assert.assertEquals(4, commentRepository.count());
+        Genre genre = new Genre(24, "genrename24");
+        genreRepository.save(genre);
+        Assert.assertEquals(3, genreRepository.count());
+        Assert.assertEquals(24, genre.getId());
     }
 
     @Test
     public void deleteById() {
-        commentRepository.deleteById(503L);
-        Assert.assertEquals(2, commentRepository.count());
-    }
-
-    @Test
-    public void cascadeOnDeleteBook() {
-        bookRepository.deleteById(1003L);
-        Assert.assertEquals(2, commentRepository.count());
+        genreRepository.deleteById(23L);
+        Assert.assertEquals(1, genreRepository.count());
     }
 }

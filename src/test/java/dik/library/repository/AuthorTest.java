@@ -1,7 +1,7 @@
-package dik.library.testgenre;
+package dik.library.repository;
 
-import dik.library.entity.Genre;
-import dik.library.repository.GenreRepository;
+import dik.library.entity.Author;
+import dik.library.repository.AuthorRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,43 +17,45 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
-public class GenreTest {
+public class AuthorTest {
 
     @Autowired
-    GenreRepository genreRepository;
+    AuthorRepository authorRepository;
 
     @Test
     public void count() {
-        Assert.assertEquals(2, genreRepository.count());
+        Assert.assertEquals(2, authorRepository.count());
     }
 
     @Test
     public void getByID() {
-        Assert.assertEquals("genrename22", Objects.requireNonNull(genreRepository.findById(22L).orElse(null)).getGenreName());
+        Assert.assertEquals("firstname101", Objects.requireNonNull(authorRepository.findById(101L).orElse(null)).getFirstName());
     }
 
     @Test
     public void getAll() {
-        List<Genre> genres = genreRepository.findAll();
-        Assert.assertEquals("genrename22", genres.get(0).getGenreName());
+        List<Author> authors = authorRepository.findAll();
+        Assert.assertEquals("firstname99", authors.get(0).getFirstName());
     }
 
     @Test
     public void insert() {
-        Genre genre = new Genre(24, "genrename24");
-        genreRepository.save(genre);
-        Assert.assertEquals(3, genreRepository.count());
-        Assert.assertEquals(24, genre.getId());
+        Author author = new Author(102, "firstname102", "secondname102");
+        authorRepository.save(author);
+        Assert.assertEquals(3, authorRepository.count());
+        Assert.assertEquals(102, author.getId());
     }
 
     @Test
     public void deleteById() {
-        genreRepository.deleteById(23L);
-        Assert.assertEquals(1, genreRepository.count());
+        authorRepository.deleteById(99L);
+        Assert.assertEquals(1, authorRepository.count());
     }
 }
