@@ -148,12 +148,12 @@ public class BatchConfig {
     }
 
     @Bean
-    public Job transferLibraryJob(Step step1, Step step2, Step step3) {
+    public Job transferLibraryJob(Step authorTransfer, Step genreTransfer, Step bookTransfer) {
         return jobBuilderFactory.get("libraryTransfer")
                 .incrementer(new RunIdIncrementer())
-                .start(step1)
-                .next(step2)
-                .next(step3)
+                .start(authorTransfer)
+                .next(genreTransfer)
+                .next(bookTransfer)
                 //.end()
                 .listener(new JobExecutionListener() {
                     @Override
@@ -170,8 +170,8 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step1() {
-        return stepBuilderFactory.get("step1")
+    public Step authorTransfer() {
+        return stepBuilderFactory.get("authorTransfer")
                 .chunk(5)
                 .reader(authorReader())
                 .processor(authorProcessor())
@@ -232,8 +232,8 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step2() {
-        return stepBuilderFactory.get("step2")
+    public Step genreTransfer() {
+        return stepBuilderFactory.get("genreTransfer")
                 .chunk(5)
                 .reader(genreReader())
                 .processor(genreProcessor())
@@ -294,8 +294,8 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step3() {
-        return stepBuilderFactory.get("step3")
+    public Step bookTransfer() {
+        return stepBuilderFactory.get("bookTransfer")
                 .chunk(5)
                 .reader(bookReader())
                 .processor(bookProcessor())
