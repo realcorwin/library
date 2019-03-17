@@ -46,25 +46,25 @@ public class BatchConfig {
     GenreRepository genreRepositoryH2;
 
     @Bean
-    public MongoItemReader<Book> reader() {
-        MongoItemReader<Book> mongoItemReader = new MongoItemReader<>();
-        mongoItemReader.setName("bookReader");
-        mongoItemReader.setTargetType(Book.class);
-        mongoItemReader.setTemplate(mongoOperations);
-        mongoItemReader.setQuery("{}");
-        mongoItemReader.setSort(new HashMap<String, Sort.Direction>() {{
+    public MongoItemReader<Book> bookReader() {
+        MongoItemReader<Book> bookMongoItemReader = new MongoItemReader<>();
+        bookMongoItemReader.setName("bookReader");
+        bookMongoItemReader.setTargetType(Book.class);
+        bookMongoItemReader.setTemplate(mongoOperations);
+        bookMongoItemReader.setQuery("{}");
+        bookMongoItemReader.setSort(new HashMap<String, Sort.Direction>() {{
             put("_id", Sort.Direction.DESC);
         }});
-        return mongoItemReader;
+        return bookMongoItemReader;
     }
 
     @Bean
-    public EmbeddedH2ItemWriter writer() {
-        return new EmbeddedH2ItemWriter();
+    public EmbeddedH2BookItemWriter bookWriter() {
+        return new EmbeddedH2BookItemWriter();
     }
 
     @Bean
-    public ItemProcessor processor() {
+    public ItemProcessor bookProcessor() {
         return (ItemProcessor<Book, dik.library.entity.Book>) book -> {
             dik.library.entity.Book bookH2 = new dik.library.entity.Book();
             bookH2.setName(book.getName());
@@ -83,11 +83,68 @@ public class BatchConfig {
     }
 
     @Bean
-    public Job importUserJob(Step step1) {
-        return jobBuilderFactory.get("bookReader")
+    public MongoItemReader<dik.library.model.Author> authorReader() {
+        MongoItemReader<dik.library.model.Author> authorMongoItemReader = new MongoItemReader<>();
+        authorMongoItemReader.setName("authorReader");
+        authorMongoItemReader.setTargetType(dik.library.model.Author.class);
+        authorMongoItemReader.setTemplate(mongoOperations);
+        authorMongoItemReader.setQuery("{}");
+        authorMongoItemReader.setSort(new HashMap<String, Sort.Direction>() {{
+            put("_id", Sort.Direction.DESC);
+        }});
+        return authorMongoItemReader;
+    }
+
+    @Bean
+    public EmbeddedH2AuthorItemWriter authorWriter() {
+        return new EmbeddedH2AuthorItemWriter();
+    }
+
+    @Bean
+    public ItemProcessor authorProcessor() {
+        return (ItemProcessor<dik.library.model.Author, Author>) author -> {
+            Author authorH2 = new Author();
+            authorH2.setFirstName(author.getFirstName());
+            authorH2.setSecondName(author.getSecondName());
+            return authorH2;
+        };
+    }
+
+    @Bean
+    public MongoItemReader<dik.library.model.Genre> genreReader() {
+        MongoItemReader<dik.library.model.Genre> genreMongoItemReader = new MongoItemReader<>();
+        genreMongoItemReader.setName("genreReader");
+        genreMongoItemReader.setTargetType(dik.library.model.Genre.class);
+        genreMongoItemReader.setTemplate(mongoOperations);
+        genreMongoItemReader.setQuery("{}");
+        genreMongoItemReader.setSort(new HashMap<String, Sort.Direction>() {{
+            put("_id", Sort.Direction.DESC);
+        }});
+        return genreMongoItemReader;
+    }
+
+    @Bean
+    public EmbeddedH2GenreItemWriter genreWriter() {
+        return new EmbeddedH2GenreItemWriter();
+    }
+
+    @Bean
+    public ItemProcessor genreProcessor() {
+        return (ItemProcessor<dik.library.model.Genre, Genre>) genre -> {
+            Genre genreH2 = new Genre();
+            genreH2.setGenreName(genre.getGenreName());
+            return genreH2;
+        };
+    }
+
+    @Bean
+    public Job transferLibraryJob(Step step1, Step step2, Step step3) {
+        return jobBuilderFactory.get("libraryReader")
                 .incrementer(new RunIdIncrementer())
-                .flow(step1)
-                .end()
+                .start(step1)
+                .next(step2)
+                .next(step3)
+                //.end()
                 .listener(new JobExecutionListener() {
                     @Override
                     public void beforeJob(JobExecution jobExecution) {
@@ -102,12 +159,72 @@ public class BatchConfig {
     }
 
     @Bean
-    public Step step1(EmbeddedH2ItemWriter writer) {
+    public Step step1() {
         return stepBuilderFactory.get("step1")
                 .chunk(5)
-                .reader(reader())
-                .processor(processor())
-                .writer(writer)
+                .reader(authorReader())
+                .processor(authorProcessor())
+                .writer(authorWriter())
+                .listener(new ItemReadListener() {
+                    public void beforeRead() { System.out.println("Начало чтения"); }
+                    public void afterRead(Object o) { System.out.println("Конец чтения"); }
+                    public void onReadError(Exception e) { System.out.println("Ошибка чтения"); }
+                })
+                .listener(new ItemWriteListener() {
+                    public void beforeWrite(List list) { System.out.println("Начало записи"); }
+                    public void afterWrite(List list) { System.out.println("Конец записи"); }
+                    public void onWriteError(Exception e, List list) { System.out.println("Ошибка записи"); }
+                })
+                .listener(new ItemProcessListener() {
+                    public void beforeProcess(Object o) {System.out.println("Начало обработки");}
+                    public void afterProcess(Object o, Object o2) {System.out.println("Конец обработки");}
+                    public void onProcessError(Object o, Exception e) {System.out.println("Ошибка обработки");}
+                })
+                .listener(new ChunkListener() {
+                    public void beforeChunk(ChunkContext chunkContext) {System.out.println("Начало пачки");}
+                    public void afterChunk(ChunkContext chunkContext) {System.out.println("Конец пачки");}
+                    public void afterChunkError(ChunkContext chunkContext) {System.out.println("Ошибка пачки");}
+                })
+                .build();
+    }
+
+    @Bean
+    public Step step2() {
+        return stepBuilderFactory.get("step2")
+                .chunk(5)
+                .reader(genreReader())
+                .processor(genreProcessor())
+                .writer(genreWriter())
+                .listener(new ItemReadListener() {
+                    public void beforeRead() { System.out.println("Начало чтения"); }
+                    public void afterRead(Object o) { System.out.println("Конец чтения"); }
+                    public void onReadError(Exception e) { System.out.println("Ошибка чтения"); }
+                })
+                .listener(new ItemWriteListener() {
+                    public void beforeWrite(List list) { System.out.println("Начало записи"); }
+                    public void afterWrite(List list) { System.out.println("Конец записи"); }
+                    public void onWriteError(Exception e, List list) { System.out.println("Ошибка записи"); }
+                })
+                .listener(new ItemProcessListener() {
+                    public void beforeProcess(Object o) {System.out.println("Начало обработки");}
+                    public void afterProcess(Object o, Object o2) {System.out.println("Конец обработки");}
+                    public void onProcessError(Object o, Exception e) {System.out.println("Ошибка обработки");}
+                })
+                .listener(new ChunkListener() {
+                    public void beforeChunk(ChunkContext chunkContext) {System.out.println("Начало пачки");}
+                    public void afterChunk(ChunkContext chunkContext) {System.out.println("Конец пачки");}
+                    public void afterChunkError(ChunkContext chunkContext) {System.out.println("Ошибка пачки");}
+                })
+                .build();
+    }
+
+    @Bean
+    public Step step3() {
+        return stepBuilderFactory.get("step3")
+                .chunk(5)
+                .reader(bookReader())
+                .processor(bookProcessor())
+                .writer(bookWriter())
                 .listener(new ItemReadListener() {
                     public void beforeRead() { System.out.println("Начало чтения"); }
                     public void afterRead(Object o) { System.out.println("Конец чтения"); }

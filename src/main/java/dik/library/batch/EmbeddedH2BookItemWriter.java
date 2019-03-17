@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class EmbeddedH2ItemWriter implements ItemWriter<Book> {
+public class EmbeddedH2BookItemWriter implements ItemWriter<Book> {
 
     @Autowired
     private BookRepository bookRepositoryH2;
