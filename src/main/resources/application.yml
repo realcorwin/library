@@ -12,6 +12,3 @@ spring:
       database: library
       port: 27017
       host: localhost
-  shell:
-    interactive:
-      enabled: false

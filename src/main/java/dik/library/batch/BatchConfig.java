@@ -92,7 +92,7 @@ public class BatchConfig {
         };
     }
 
-    @Bean   
+    @Bean
     public MongoItemReader<dik.library.model.Author> authorReader() {
         MongoItemReader<dik.library.model.Author> authorMongoItemReader = new MongoItemReader<>();
         authorMongoItemReader.setName("authorReader");
@@ -149,7 +149,7 @@ public class BatchConfig {
 
     @Bean
     public Job transferLibraryJob(Step step1, Step step2, Step step3) {
-        return jobBuilderFactory.get("libraryReader")
+        return jobBuilderFactory.get("libraryTransfer")
                 .incrementer(new RunIdIncrementer())
                 .start(step1)
                 .next(step2)
