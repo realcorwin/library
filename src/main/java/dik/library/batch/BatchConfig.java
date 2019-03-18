@@ -169,189 +169,116 @@ public class BatchConfig {
                 .build();
     }
 
+    private ItemReadListener readListener = new ItemReadListener() {
+        @Override
+        public void beforeRead() {
+            System.out.println("Начало чтения");
+        }
+
+        @Override
+        public void afterRead(Object o) {
+            System.out.println("Конец чтения");
+        }
+
+        @Override
+        public void onReadError(Exception e) {
+            System.out.println("Ошибка чтения");
+        }
+    };
+
+    private ItemWriteListener writeListener = new ItemWriteListener() {
+        @Override
+        public void beforeWrite(List list) {
+            System.out.println("Начало записи");
+        }
+
+        @Override
+        public void afterWrite(List list) {
+            System.out.println("Конец записи");
+        }
+
+        @Override
+        public void onWriteError(Exception e, List list) {
+            System.out.println("Ошибка записи");
+        }
+    };
+
+    private ItemProcessListener processListener = new ItemProcessListener() {
+        @Override
+        public void beforeProcess(Object o) {
+            System.out.println("Начало обработки");
+        }
+
+        @Override
+        public void afterProcess(Object o, Object o2) {
+            System.out.println("Конец обработки");
+        }
+
+        @Override
+        public void onProcessError(Object o, Exception e) {
+            System.out.println("Ошибка обработки");
+        }
+    };
+
+    private ChunkListener chunkListener = new ChunkListener() {
+        @Override
+        public void beforeChunk(ChunkContext chunkContext) {
+            System.out.println("Начало пачки");
+        }
+
+        @Override
+        public void afterChunk(ChunkContext chunkContext) {
+            System.out.println("Конец пачки");
+        }
+
+        @Override
+        public void afterChunkError(ChunkContext chunkContext) {
+            System.out.println("Ошибка пачки");
+        }
+    };
+
     @Bean
+    @SuppressWarnings("unchecked")
     public Step authorTransfer() {
         return stepBuilderFactory.get("authorTransfer")
                 .chunk(5)
                 .reader(authorReader())
                 .processor(authorProcessor())
                 .writer(authorWriter())
-                .listener(new ItemReadListener() {
-                    public void beforeRead() {
-                        System.out.println("Начало чтения");
-                    }
-
-                    public void afterRead(Object o) {
-                        System.out.println("Конец чтения");
-                    }
-
-                    public void onReadError(Exception e) {
-                        System.out.println("Ошибка чтения");
-                    }
-                })
-                .listener(new ItemWriteListener() {
-                    public void beforeWrite(List list) {
-                        System.out.println("Начало записи");
-                    }
-
-                    public void afterWrite(List list) {
-                        System.out.println("Конец записи");
-                    }
-
-                    public void onWriteError(Exception e, List list) {
-                        System.out.println("Ошибка записи");
-                    }
-                })
-                .listener(new ItemProcessListener() {
-                    public void beforeProcess(Object o) {
-                        System.out.println("Начало обработки");
-                    }
-
-                    public void afterProcess(Object o, Object o2) {
-                        System.out.println("Конец обработки");
-                    }
-
-                    public void onProcessError(Object o, Exception e) {
-                        System.out.println("Ошибка обработки");
-                    }
-                })
-                .listener(new ChunkListener() {
-                    public void beforeChunk(ChunkContext chunkContext) {
-                        System.out.println("Начало пачки");
-                    }
-
-                    public void afterChunk(ChunkContext chunkContext) {
-                        System.out.println("Конец пачки");
-                    }
-
-                    public void afterChunkError(ChunkContext chunkContext) {
-                        System.out.println("Ошибка пачки");
-                    }
-                })
+                .listener(readListener)
+                .listener(writeListener)
+                .listener(processListener)
+                .listener(chunkListener)
                 .build();
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public Step genreTransfer() {
         return stepBuilderFactory.get("genreTransfer")
                 .chunk(5)
                 .reader(genreReader())
                 .processor(genreProcessor())
                 .writer(genreWriter())
-                .listener(new ItemReadListener() {
-                    public void beforeRead() {
-                        System.out.println("Начало чтения");
-                    }
-
-                    public void afterRead(Object o) {
-                        System.out.println("Конец чтения");
-                    }
-
-                    public void onReadError(Exception e) {
-                        System.out.println("Ошибка чтения");
-                    }
-                })
-                .listener(new ItemWriteListener() {
-                    public void beforeWrite(List list) {
-                        System.out.println("Начало записи");
-                    }
-
-                    public void afterWrite(List list) {
-                        System.out.println("Конец записи");
-                    }
-
-                    public void onWriteError(Exception e, List list) {
-                        System.out.println("Ошибка записи");
-                    }
-                })
-                .listener(new ItemProcessListener() {
-                    public void beforeProcess(Object o) {
-                        System.out.println("Начало обработки");
-                    }
-
-                    public void afterProcess(Object o, Object o2) {
-                        System.out.println("Конец обработки");
-                    }
-
-                    public void onProcessError(Object o, Exception e) {
-                        System.out.println("Ошибка обработки");
-                    }
-                })
-                .listener(new ChunkListener() {
-                    public void beforeChunk(ChunkContext chunkContext) {
-                        System.out.println("Начало пачки");
-                    }
-
-                    public void afterChunk(ChunkContext chunkContext) {
-                        System.out.println("Конец пачки");
-                    }
-
-                    public void afterChunkError(ChunkContext chunkContext) {
-                        System.out.println("Ошибка пачки");
-                    }
-                })
+                .listener(readListener)
+                .listener(writeListener)
+                .listener(processListener)
+                .listener(chunkListener)
                 .build();
     }
 
     @Bean
+    @SuppressWarnings("unchecked")
     public Step bookTransfer() {
         return stepBuilderFactory.get("bookTransfer")
                 .chunk(5)
                 .reader(bookReader())
                 .processor(bookProcessor())
                 .writer(bookWriter())
-                .listener(new ItemReadListener() {
-                    public void beforeRead() {
-                        System.out.println("Начало чтения");
-                    }
-
-                    public void afterRead(Object o) {
-                        System.out.println("Конец чтения");
-                    }
-
-                    public void onReadError(Exception e) {
-                        System.out.println("Ошибка чтения");
-                    }
-                })
-                .listener(new ItemWriteListener() {
-                    public void beforeWrite(List list) {
-                        System.out.println("Начало записи");
-                    }
-
-                    public void afterWrite(List list) {
-                        System.out.println("Конец записи");
-                    }
-
-                    public void onWriteError(Exception e, List list) {
-                        System.out.println("Ошибка записи");
-                    }
-                })
-                .listener(new ItemProcessListener() {
-                    public void beforeProcess(Object o) {
-                        System.out.println("Начало обработки");
-                    }
-
-                    public void afterProcess(Object o, Object o2) {
-                        System.out.println("Конец обработки");
-                    }
-
-                    public void onProcessError(Object o, Exception e) {
-                        System.out.println("Ошибка обработки");
-                    }
-                })
-                .listener(new ChunkListener() {
-                    public void beforeChunk(ChunkContext chunkContext) {
-                        System.out.println("Начало пачки");
-                    }
-
-                    public void afterChunk(ChunkContext chunkContext) {
-                        System.out.println("Конец пачки");
-                    }
-
-                    public void afterChunkError(ChunkContext chunkContext) {
-                        System.out.println("Ошибка пачки");
-                    }
-                })
+                .listener(readListener)
+                .listener(writeListener)
+                .listener(processListener)
+                .listener(chunkListener)
                 .build();
     }
 }
