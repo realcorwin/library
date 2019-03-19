@@ -34,9 +34,6 @@ public class BatchConfig {
     public StepBuilderFactory stepBuilderFactory;
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
     MongoOperations mongoOperations;
 
     @Autowired
@@ -69,27 +66,37 @@ public class BatchConfig {
             dik.library.entity.Book bookH2 = new dik.library.entity.Book();
             bookH2.setName(book.getName());
             bookH2.setDescription(book.getDescription());
-            Author authorH2;
-            if (authorRepositoryH2.findFirstByFirstNameAndSecondName(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()) != null)
-                authorH2 = authorRepositoryH2.findFirstByFirstNameAndSecondName(book.getAuthor().getFirstName(), book.getAuthor().getSecondName());
-            else {
-                authorH2 = new Author();
-                authorH2.setFirstName(book.getAuthor().getFirstName());
-                authorH2.setSecondName(book.getAuthor().getSecondName());
-            }
+            Author authorH2 = getOrCreateAuthor(book);
             bookH2.setAuthor(authorH2);
             authorRepositoryH2.save(authorH2);
-            Genre genreH2;
-            if (genreRepositoryH2.findFirstByGenreName(book.getGenre().getGenreName()) != null)
-                genreH2 = genreRepositoryH2.findFirstByGenreName(book.getGenre().getGenreName());
-            else {
-                genreH2 = new Genre();
-                genreH2.setGenreName(book.getGenre().getGenreName());
-            }
+            Genre genreH2 = getOrCreateGenre(book);
             bookH2.setGenre(genreH2);
             genreRepositoryH2.save(genreH2);
             return bookH2;
         };
+    }
+
+    private Genre getOrCreateGenre(Book book) {
+        Genre genreH2;
+        if (genreRepositoryH2.findFirstByGenreName(book.getGenre().getGenreName()) != null)
+            genreH2 = genreRepositoryH2.findFirstByGenreName(book.getGenre().getGenreName());
+        else {
+            genreH2 = new Genre();
+            genreH2.setGenreName(book.getGenre().getGenreName());
+        }
+        return genreH2;
+    }
+
+    private Author getOrCreateAuthor(Book book) {
+        Author authorH2;
+        if (authorRepositoryH2.findFirstByFirstNameAndSecondName(book.getAuthor().getFirstName(), book.getAuthor().getSecondName()) != null)
+            authorH2 = authorRepositoryH2.findFirstByFirstNameAndSecondName(book.getAuthor().getFirstName(), book.getAuthor().getSecondName());
+        else {
+            authorH2 = new Author();
+            authorH2.setFirstName(book.getAuthor().getFirstName());
+            authorH2.setSecondName(book.getAuthor().getSecondName());
+        }
+        return authorH2;
     }
 
     @Bean
