@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 
