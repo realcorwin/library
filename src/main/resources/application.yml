@@ -8,3 +8,32 @@ spring:
   shell:
     interactive:
       enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    env:
+      enabled: true
+    configprops:
+      enabled: true
+    metrics:
+      enabled: true
+    health:
+      enabled: true
+    logfile:
+      enabled: true
+  health:
+    diskspace:
+      enabled: true
+    mongo:
+      enabled: true
+    defaults:
+      enabled: true
+logging:
+  file: "spring-logfile.log"
+  level:
+    root: INFO
+  pattern:
+    file: '%d{yyyy-MM-dd HH:mm:ss} %-5level - %msg%n'
