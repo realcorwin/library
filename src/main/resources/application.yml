@@ -1,10 +1,7 @@
 spring:
   data:
     mongodb:
-      authentication-database: none
-      database: library
-      port: 27017
-      host: localhost
+      uri: mongodb://mongocontainer:27017/library
     rest:
       basePath: /datarest
   shell:
