@@ -1,5 +1,6 @@
 package dik.library.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import dik.library.model.Author;
 import dik.library.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +24,32 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    @HystrixCommand(groupKey = "authorService", commandKey = "getAuthor")
     public Author getById(String id) {
         return authorRepository.findById(id).orElse(null);
         // return authorRepository.getOne(id); //no sessions
     }
 
     @Override
+    @HystrixCommand(groupKey = "authorService", commandKey = "getAllAuthor")
     public List<Author> getAllAuthor() {
         return authorRepository.findAll();
     }
 
     @Override
+    @HystrixCommand(groupKey = "authorService", commandKey = "insertAuthor")
     public void insert(String firstName, String secondName) {
         authorRepository.save(new Author(firstName, secondName));
     }
 
     @Override
+    @HystrixCommand(groupKey = "authorService", commandKey = "deleteAuthor")
     public void deleteById(String id) {
         authorRepository.deleteById(id);
     }
 
     @Override
+    @HystrixCommand(groupKey = "authorService", commandKey = "updateAuthor")
     public void update(Author author) {
         authorRepository.save(author);
     }
