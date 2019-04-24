@@ -1,5 +1,6 @@
 package dik.library.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import dik.library.model.Genre;
 import dik.library.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,26 +24,31 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @HystrixCommand(groupKey = "genreService", commandKey = "getGenre")
     public Genre getById(String id) {
         return genreRepository.findById(id).orElse(null);
     }
 
     @Override
+    @HystrixCommand(groupKey = "genreService", commandKey = "getAllGenre")
     public List<Genre> getAllGenre() {
         return genreRepository.findAll();
     }
 
     @Override
+    @HystrixCommand(groupKey = "genreService", commandKey = "insertGenre")
     public void insert(String genreName) {
         genreRepository.save(new Genre(genreName));
     }
 
     @Override
+    @HystrixCommand(groupKey = "genreService", commandKey = "deleteGenre")
     public void deleteById(String id) {
         genreRepository.deleteById(id);
     }
 
     @Override
+    @HystrixCommand(groupKey = "genreService", commandKey = "updateGenre")
     public void update(Genre genre) {
         genreRepository.save(genre);
     }
